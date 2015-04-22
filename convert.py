@@ -6,16 +6,17 @@ def processLine(line, lineIndex):
     # first item is the label
     label = float(lineItems[0])
 
+    # collect data
     # prune the label
     lineItems = lineItems[1:]
 
-    # collect data
     row = list()
     col = list()
     data = list()
 
     for value in lineItems:
         colVal = value.split(':')
+
         row.append(int(lineIndex))      # i'th value represents row index
         col.append(int(colVal[0]))      # i'th value represents column index
         data.append(float(colVal[1]))   # i'th value represents value
@@ -31,7 +32,7 @@ def convert(fileName):
     cols = list()
     data = list()
     labels = list()
-
+    skipped = 0
     for lineIndex in range(len(lines)):
 
         if lineIndex % 50000 == 0:
@@ -39,7 +40,12 @@ def convert(fileName):
 
         line = lines[lineIndex]
 
-        label, r, c, d = processLine(line, lineIndex)
+        if line == "0.0," or line == "1.0,":
+            #print "skip row..."
+            skipped = skipped + 1
+            continue
+
+        label, r, c, d = processLine(line, lineIndex - skipped) # important to reduce the index!!!
         labels.append(int(label))
         rows.extend(r)
         cols.extend(c)
@@ -50,25 +56,26 @@ def convert(fileName):
     maxRows = np.max(rows)
     maxColumns = np.max(cols)
 
+
     matrix = csr_matrix((np.array(data), (np.array(rows), np.array(cols))), shape=(maxRows+1, maxColumns+1))
+    print np.shape(matrix)
+    print np.shape(labels)
+    print skipped
+
     return matrix, labels
 
-def getStatistics(labels, matrix):
-    shape = np.shape(matrix)
-    instances = shape[0]
-    features = shape[1]
+def loadFirst():
+    data, labels = convert("../plista-data/export_sparse_publisher_vectors_11_33158,970,13725_hour_2-1.csv")
+    return data, labels
 
-    positive = np.sum(labels)
-    negative = instances - positive
+def loadSecond():
+    data, labels = convert("../plista-data/export_sparse_publisher_vectors_11_33158,970,13725_hour_3-1.csv")
+    return data, labels
 
-    return instances, features, positive, negative
+def loadThird():
+    data, labels = convert("../plista-data/export_sparse_publisher_vectors_11_33158,970,13725_hour_4-1.csv")
+    return data, labels
 
-'''
-print "dataset 1"
-matrix, labels = convert("../plista-data/export_sparse_publisher_vectors_11_1477_hour_3-1.csv")
-print getStatistics(labels, matrix)
-
-print "dataset 2"
-matrix, labels = convert("../plista-data/export_sparse_publisher_vectors_11_13725,970,4787_hour_2-1.csv")
-getStatistics(labels, matrix)
-'''
+def loadBig():
+    data, labels = convert("../plista-data/export_sparse_publisher_vectors_11_33158,970,13725,970,4787_hour_4-1.csv")
+    return data, labels

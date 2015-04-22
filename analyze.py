@@ -2,28 +2,22 @@ import numpy as np
 import cancer_datasets as cancer
 
 
-def analyze(data, labels):
-    if len(data) != len(labels):
+def analyze(data, label):
+    shapeData = np.shape(data)
+    shapeLabel = np.shape(label)
+    if shapeData[0] != shapeLabel[0]:
         raise Exception("each instance needs a label")
     print "------ analyze data -------"
     print np.shape(data)
-    print np.shape(labels)
+    print np.shape(label)
 
-    numSamples = len(labels)
+    numSamples = len(label)
 
-    positiveExamples = np.sum(labels)
+    positiveExamples = np.sum(label)
     negativeExamples = numSamples - positiveExamples
 
-    negativePercentage = negativeExamples * 100 / numSamples
-    positivePercentage = positiveExamples * 100 / numSamples
+    negativePercentage = float(negativeExamples) * 100 / float(numSamples)
+    positivePercentage = float(positiveExamples) * 100 / float(numSamples)
 
-    print "'0'-labeled data: %s (%.2f %%)" % (negativeExamples, negativePercentage)
-    print "'1'-labeled data: %s (%.2f %%)" % (positiveExamples, positivePercentage)
-
-'''
-data, labels = cancer.loadFirstDataset()
-analyze(data,labels)
-
-data, labels = cancer.loadSecondDataset()
-analyze(data,labels)
-'''
+    print "'0'-labeled data: %s (%.4f %%)" % (negativeExamples, negativePercentage)
+    print "'1'-labeled data: %s (%.4f %%)" % (positiveExamples, positivePercentage)

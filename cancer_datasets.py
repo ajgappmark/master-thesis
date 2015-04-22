@@ -127,11 +127,11 @@ def loadBothDatasets():
 
     return firstDatasetData, firstDatasetLabel, secondDatasetData, secondDatasetLabel
 
-def loadFirstDataset():
+def loadFirst():
     firstDatasetData, firstDatasetLabel, secondDatasetData, secondDatasetLabel = loadBothDatasets()
     return firstDatasetData, firstDatasetLabel
 
-def loadSecondDataset():
+def loadSecond():
     firstDatasetData, firstDatasetLabel, secondDatasetData, secondDatasetLabel = loadBothDatasets()
     return secondDatasetData, secondDatasetLabel
 
