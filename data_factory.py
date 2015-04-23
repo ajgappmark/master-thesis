@@ -5,28 +5,32 @@ import convert as plistaDataSets
 
 def loadFirstCancerDataset():
     data, label = cancerDataSets.loadFirst()
-    return data, label, "cancer 1"
+    return data, label, "cancer 1", 0
 
 
 def loadSecondCancerDataset():
     data,label = cancerDataSets.loadSecond()
-    return data, label, "cancer 2"
+    return data, label, "cancer 2", 0
 
 def loadFirstPlistaDataset():
     data,label = plistaDataSets.loadFirst()
-    return data, label, "impressions 1"
+    return data, label, "impressions 1", 0
 
 def loadSecondPlistaDataset():
     data,label = plistaDataSets.loadSecond()
-    return data, label, "impressions 2"
+    return data, label, "impressions 2", 0
 
 def loadThridPlistaDataset():
     data,label = plistaDataSets.loadThird()
-    return data, label, "impressions 3"
+    return data, label, "impressions 3", 0
+
+def loadFourthPlistaDataset():
+    data,label = plistaDataSets.loadFirth()
+    return data, label, "impressions 4", 0
 
 def loadBigDataset():
     data,label = plistaDataSets.loadBig()
-    return data, label, "big dataset"
+    return data, label, "big dataset", 0
 
 def splitDatasetInBlocks(data, labels, trainBlockSizes, testSetPercentage):
 
@@ -39,7 +43,7 @@ def splitDatasetInBlocks(data, labels, trainBlockSizes, testSetPercentage):
         train = trainBlockSizes[i]
         test = testSetPercentage * trainBlockSizes[i]
 
-        skf = cross_validation.StratifiedShuffleSplit(labels, 2, train_size=train, test_size=test)
+        skf = cross_validation.StratifiedShuffleSplit(labels, 5, train_size=train, test_size=test)
 
         a = []
         b = []
@@ -64,8 +68,9 @@ def getAllDatasets():
                  loadSecondCancerDataset,
                  loadFirstPlistaDataset,
                  loadSecondPlistaDataset,
-                 loadThridPlistaDataset
-            ]
+                 loadThridPlistaDataset,
+                 loadFourthPlistaDataset
+               ]
     return dataSets
 
 def getExperimentDataset():
@@ -75,7 +80,8 @@ def getExperimentDataset():
 def getAllPlistaDatasets():
     dataSets = [ loadFirstPlistaDataset,
                  loadSecondPlistaDataset,
-                 loadThridPlistaDataset
+                 loadThridPlistaDataset,
+                 loadFourthPlistaDataset
             ]
     return dataSets
 

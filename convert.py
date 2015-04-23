@@ -17,8 +17,8 @@ def processLine(line, lineIndex):
     for value in lineItems:
         colVal = value.split(':')
 
-        row.append(int(lineIndex))      # i'th value represents row index
-        col.append(int(colVal[0]))      # i'th value represents column index
+        row.append(float(lineIndex))      # i'th value represents row index
+        col.append(float(colVal[0]))      # i'th value represents column index
         data.append(float(colVal[1]))   # i'th value represents value
 
     return label, row, col, data
@@ -46,7 +46,7 @@ def convert(fileName):
             continue
 
         label, r, c, d = processLine(line, lineIndex - skipped) # important to reduce the index!!!
-        labels.append(int(label))
+        labels.append(float(label))
         rows.extend(r)
         cols.extend(c)
         data.extend(d)
@@ -76,6 +76,6 @@ def loadThird():
     data, labels = convert("../plista-data/export_sparse_publisher_vectors_11_33158,970,13725_hour_4-1.csv")
     return data, labels
 
-def loadBig():
+def loadFirth():
     data, labels = convert("../plista-data/export_sparse_publisher_vectors_11_33158,970,13725,970,4787_hour_4-1.csv")
     return data, labels
