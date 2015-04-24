@@ -65,17 +65,17 @@ def convert(fileName):
     return matrix, labels
 
 def loadFirst():
-    data, labels = convert("../plista-data/export_sparse_publisher_vectors_11_33158,970,13725_hour_2-1.csv")
+    data, labels = convert("../../plista-data/export_sparse_publisher_vectors_11_33158,970,13725_hour_2-1.csv")
     return data, labels
 
 def loadSecond():
-    data, labels = convert("../plista-data/export_sparse_publisher_vectors_11_33158,970,13725_hour_3-1.csv")
+    data, labels = convert("../../plista-data/export_sparse_publisher_vectors_11_33158,970,13725_hour_3-1.csv")
     return data, labels
 
 def loadThird():
-    data, labels = convert("../plista-data/export_sparse_publisher_vectors_11_33158,970,13725_hour_4-1.csv")
+    data, labels = convert("../../plista-data/export_sparse_publisher_vectors_11_33158,970,13725_hour_4-1.csv")
     return data, labels
 
 def loadFirth():
-    data, labels = convert("../plista-data/export_sparse_publisher_vectors_11_33158,970,13725,970,4787_hour_4-1.csv")
+    data, labels = convert("../../plista-data/export_sparse_publisher_vectors_11_33158,970,13725,970,4787_hour_4-1.csv")
     return data, labels

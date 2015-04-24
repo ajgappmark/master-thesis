@@ -58,8 +58,13 @@ def pca(data, labels, new_dimension):
 def ipca(data, labels, new_dimension):
     print "start incremental pca..."
     start = time.time()
-    pca = IncrementalPCA(n_components=new_dimension)
-    reduced = pca.fit_transform(data)
+    pca = IncrementalPCA(n_components=new_dimension, batch_size=1000)
+
+    if hasattr(data, "todense"):
+        reduced = pca.fit_transform(np.array(data.todense()))
+    else:
+        reduced = pca.fit_transform(data)
+
     end = time.time()
     return (reduced, end-start)
 

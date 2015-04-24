@@ -73,7 +73,7 @@ for i in range(len(dataSets)):
     plt.plot(x, y, label="not reduced")
 
     # now do reduction and plot the performance based on the reduced data
-    algos = ["hash", "rp", "pca"]
+    algos = ["hash", "rp", "incremental_pca"]
 
     for algo in algos:
         reduced ,duration = dr.reduceByKey(algo, data, label, 5)
