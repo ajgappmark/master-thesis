@@ -2,12 +2,12 @@ import numpy as np
 import cancer_datasets as cancer
 
 
-def analyze(data, label):
+def analyze(data, label, description = "analyze data"):
     shapeData = np.shape(data)
     shapeLabel = np.shape(label)
     if shapeData[0] != shapeLabel[0]:
         raise Exception("each instance needs a label")
-    print "------ analyze data -------"
+    print "------ %s -------" % description
     print np.shape(data)
     print np.shape(label)
 

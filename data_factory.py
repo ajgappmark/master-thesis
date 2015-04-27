@@ -12,9 +12,9 @@ def loadSecondCancerDataset():
     data,label = cancerDataSets.loadSecond()
     return data, label, "cancer 2", 0
 
-def loadFirstPlistaDataset():
+def loadFirstPlistaDataset(size = 0):
     data,label = plistaDataSets.loadFirst()
-    return data, label, "impressions 1", 0
+    return data, label, "impressions 1", size
 
 def loadSecondPlistaDataset():
     data,label = plistaDataSets.loadSecond()
@@ -27,6 +27,14 @@ def loadThridPlistaDataset():
 def loadFourthPlistaDataset():
     data,label = plistaDataSets.loadFirth()
     return data, label, "impressions 4", 0
+
+def loadFifthPlistaDataset(size = 0):
+    data, label = plistaDataSets.loadFifth()
+    return data, label, "impressions 5", size
+
+def loadSixthPlistaDataset(size = 0):
+    data, label = plistaDataSets.loadSixth()
+    return data, label, "impressions 5", size
 
 def loadBigDataset():
     data,label = plistaDataSets.loadBig()
@@ -62,6 +70,11 @@ def splitDatasetInBlocks(data, labels, trainBlockSizes, testSetPercentage):
         testLabelBlocks.append(d)
 
     return trainDataBlocks, trainLabelBlocks, testDataBlocks, testLabelBlocks
+
+
+def getSmallDatasets():
+    sets = [loadFifthPlistaDataset, loadFirstPlistaDataset]
+    return sets
 
 def getAllDatasets():
     dataSets = [ loadFirstCancerDataset,

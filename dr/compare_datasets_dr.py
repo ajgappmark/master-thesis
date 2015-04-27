@@ -41,7 +41,7 @@ def getXYForDataLabel(data, label):
 
     return x, y
 
-dataSets = data_factory.getAllDatasets()
+dataSets = data_factory.getSmallDatasets()
 for i in range(len(dataSets)):
     load = dataSets[i]
     data, label, desc, size = load()

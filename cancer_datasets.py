@@ -69,7 +69,9 @@ def processLineForFirstDataset(line):
     else:
         raise Exception('only label B or M allowed. label %s is wrong' % line[0])
 
-    return line[1:], label
+    l = line[1:]
+
+    return l, label
 
 def processLineForSecondDataset(line):
     '''
@@ -96,6 +98,10 @@ def processLineForSecondDataset(line):
         label = 1
     else:
         raise Exception('only label 2 or 4 allowed. label %s is wrong' % line[0])
+
+#    l = list()
+#    for item in line:
+#        l.append(int(item))
 
     return line, label
 
