@@ -99,9 +99,9 @@ def processLineForSecondDataset(line):
     else:
         raise Exception('only label 2 or 4 allowed. label %s is wrong' % line[0])
 
-#    l = list()
-#    for item in line:
-#        l.append(int(item))
+    #l = list()
+    #for item in line:
+    #    l.append(int(item*1000000))
 
     return line, label
 
@@ -109,13 +109,13 @@ def sanitizeVector(row):
     '''
         converts values do double and apply
         my simple strategy to handle missing values ('?')
-        - replace them as -1 to make them a own case while binary encoding later
+        - replace them as 0 to make them behave as not existing in binary representation
     '''
     newData = np.empty(shape=(len(row)))
     for i in range(len(row)):
         value = row[i]
         if value == '?':
-            value = -1.0
+            value = 0
         newData[i] = value
     return newData
 

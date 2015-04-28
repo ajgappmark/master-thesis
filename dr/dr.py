@@ -63,7 +63,7 @@ def ipca(data, labels, new_dimension):
         data = np.array(data.todense())
 
     start = time.time()
-    pca = IncrementalPCA(n_components=new_dimension, batch_size=100)
+    pca = IncrementalPCA(n_components=new_dimension)
     reduced = pca.fit_transform(data)
     end = time.time()
     return (reduced, end-start)
@@ -194,6 +194,15 @@ def getFasterAlgos():
 
 def getAllAlgos():
     return options
+
+def getAllAlgosInclude(include):
+    allAlgos = getAllAlgos()
+    includedAlgos = dict()
+    for key in include:
+        includedAlgos[key] = allAlgos[key]
+
+    return includedAlgos
+
 
 def getAllAlgosExlude(exclude):
     allAlgos = getAllAlgos()

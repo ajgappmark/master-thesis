@@ -1,5 +1,4 @@
 dr/output/
-evaluate-dimension-estimate/
 learning_curves/output/
 performance/output/
 *.pyc

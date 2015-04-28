@@ -5,6 +5,7 @@ import dr
 from sklearn import cross_validation, linear_model
 from sklearn.preprocessing import OneHotEncoder
 import os.path
+import csv
 
 import matplotlib
 matplotlib.use('Agg')
@@ -64,10 +65,12 @@ def execute(experiment):
 
     data, label, description, reduce = loadData(experiment)
 
+    analyze(data, label, "size of orig: %s" % experiment["size"])
+
     # we want one figure for each y-metric
+    x, yValues = runExperimentForMetric(data, label, algos, dimensions)
     for i in range(len(metrics)):
         metric = metrics[i]
-        x, yValues = runExperimentForMetric(data, label, metric, algos, dimensions)
         plt.figure(i)
         plt.subplot(111)
         plt.grid()
@@ -84,13 +87,20 @@ def execute(experiment):
 
         #plt.legend(loc="best")
         plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.08),
-                   fancybox=True, shadow=True, ncol=5)
+                   fancybox=True, shadow=True, ncol=2)
 
         plt.savefig("%s/dimension_vs_%s.png" % (folder, metric), dpi=320, bbox_inches = "tight")
 
+        with open("%s/log_dimension_vs_%s.csv" % (folder, metric), "wb") as csvfile:
+            writer = csv.writer(csvfile, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL)
+            x = [str(i) for i in x]
+            writer.writerow(["dimensions"]+x)
 
+            for algo in yValues.iterkeys():
+                y = yValues[algo][metric]
+                writer.writerow([algo] + y)
 
-def runExperimentForMetric(data, label, metric, algos, dimensions):
+def runExperimentForMetric(data, label, algos, dimensions):
 
     yValues = dict()
     for algo in algos:
@@ -130,7 +140,19 @@ def setupExperimentFolder(experiment):
     return outputFolder
 
 def loadData(experiment):
+
+    size = experiment["size"]
+
     data, label, description, reduce = experiment["dataset"]()
+
+    if size > 0:
+        initialReduceBlockSize = np.arange(size, size+0.2, 0.1)
+        testSetPercentage = 0.2
+        trainDataBlocks, trainLabelBlocks, testDataBlocks, testLabelBlocks = data_factory.splitDatasetInBlocks(data, np.array(label), initialReduceBlockSize, testSetPercentage)
+
+        data = trainDataBlocks[0][0]
+        label = trainLabelBlocks[0][0]
+
     if experiment['binary_encode']:
         print "perform binary encode"
         analyze(data, label, "before encode")
