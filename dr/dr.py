@@ -140,7 +140,7 @@ def lle(data, labels, new_dimension):
         data = data.toarray()
 
     start = time.time()
-    lle = manifold.LocallyLinearEmbedding(n_neighbors= int(new_dimension/2), n_components=new_dimension)
+    lle = manifold.LocallyLinearEmbedding(n_components=new_dimension) # n_neighbors= int(new_dimension/2),
     reduced = lle.fit_transform(data)
     end = time.time()
     return (reduced, end-start)
@@ -172,7 +172,8 @@ options = {
 def getFewAlgos():
     options = {
         'hash': hash,
-        'rp': randomProjection
+        'rp': randomProjection,
+        'lle': lle
     }
     return options
 
@@ -193,6 +194,12 @@ def getFasterAlgos():
 
 def getAllAlgos():
     return options
+
+def getAllAlgosExlude(exclude):
+    allAlgos = getAllAlgos()
+    for item in exclude:
+        del(allAlgos[item])
+    return allAlgos
 
 def reduceByKey(key, d, l, dimensionValue):
     return options[key](d,l, dimensionValue)
