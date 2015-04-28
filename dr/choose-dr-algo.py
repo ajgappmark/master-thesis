@@ -26,16 +26,16 @@ experiment12 = {
     'yValues':          ['rocAuc', 'algoDuration', 'lrDuration']
 }
 
-experiment13 = experiment12
+experiment13                = experiment12
 experiment13["description"] = "same algos, but more dimensions"
-experiment13["name"] = "experiment1.3"
-experiment13["dimensions"] = np.arange(50,250, 10)
+experiment13["name"]        = "experiment1.3"
+experiment13["dimensions"]  = np.arange(50,250, 10)
 
 finalAlgos = dr.getAllAlgosInclude(["rp", "hash", "pca", "isomap"])
-experiment14 = experiment13
+experiment14                = experiment13
 experiment14["description"] = "final algos for that dataset"
-experiment14["name"] = "experiment1.4"
-experiment14["algos"] = finalAlgos
+experiment14["name"]        = "experiment1.4"
+experiment14["algos"]       = finalAlgos
 
 #################### second cancer dataset ##########################
 '''
@@ -61,5 +61,18 @@ experiment31 = {
     'yValues':          ['rocAuc', 'algoDuration', 'lrDuration']
 }
 
+experiment32 = experiment31
+experiment32["name"]        = "experiment3.2"
+experiment32["dimensions"]  = range(4,15)
+experiment32["algos"]       = dr.getAllAlgosInclude(["rp", "pca", "hash"])
 
-run.execute(experiment31)
+experiment33 = experiment32
+experiment33["name"]        = "experiment3.3"
+print experiment33
+print experiment33['size']
+
+del(experiment33['size'])
+
+
+
+run.execute(experiment32)

@@ -34,7 +34,7 @@ def loadFifthPlistaDataset(size = 0):
 
 def loadSixthPlistaDataset(size = 0):
     data, label = plistaDataSets.loadSixth()
-    return data, label, "impressions 5", size
+    return data, label, "impressions 6", size
 
 def loadBigDataset():
     data,label = plistaDataSets.loadBig()

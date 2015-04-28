@@ -65,7 +65,7 @@ def execute(experiment):
 
     data, label, description, reduce = loadData(experiment)
 
-    analyze(data, label, "size of orig: %s" % experiment["size"])
+    analyze(data, label)
 
     # we want one figure for each y-metric
     x, yValues = runExperimentForMetric(data, label, algos, dimensions)
@@ -140,9 +140,10 @@ def setupExperimentFolder(experiment):
     return outputFolder
 
 def loadData(experiment):
-
-    size = experiment["size"]
-
+    if experiment.has_key("size"):
+        size = experiment["size"]
+    else:
+        size = 0
     data, label, description, reduce = experiment["dataset"]()
 
     if size > 0:
