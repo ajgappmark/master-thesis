@@ -131,7 +131,7 @@ for load in datasets:
 
 data, label, desc, size = df.loadFirstPlistaDataset()
 
-trainBlockSizes = np.arange(0.001, 0.002, 0.0001)
+trainBlockSizes = np.arange(0.001, 0.005, 0.001)
 testSetPercentage = 0.2
 trainDataBlocks, trainLabelBlocks, testDataBlocks, testLabelBlocks = df.splitDatasetInBlocks(data, np.array(label), trainBlockSizes, testSetPercentage)
 
@@ -140,20 +140,30 @@ x = list()
 yDuration = list()
 yDimension = list()
 for i in range(len(trainDataBlocks)):
-    data = trainDataBlocks[i][0]
+    estimatedDimension = list()
+    duration = list()
 
-    shape = np.shape(data)
+    shape = np.shape(trainDataBlocks[i][0])
     x.append(shape[0])
 
-    label = trainLabelBlocks[i][0]
+    for j in range(len(trainDataBlocks[i])):
+        print j
+        data = trainDataBlocks[i][j]
+        label = trainLabelBlocks[i][0]
+
+        e, d = mle(data)
+        estimatedDimension.append(e)
+        duration.append(d)
+
+
+
     #analyze(data, label)
 
-    estimatedDimension, duration = mle(data)
 
     print "estimated dimension: %s" % estimatedDimension
 
-    yDuration.append(duration)
-    yDimension.append(estimatedDimension)
+    yDuration.append(np.mean(duration))
+    yDimension.append(np.mean(estimatedDimension))
 
 
 
