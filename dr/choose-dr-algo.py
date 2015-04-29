@@ -17,6 +17,7 @@ experiment11 = {
     'yValues':          ['rocAuc', 'algoDuration', 'lrDuration']
 }
 
+
 experiment12 = {
     'description':      'cancer dataset, removed a few algos',
     'name':             'experiment1.2',
@@ -39,17 +40,26 @@ experiment14["name"]        = "experiment1.4"
 experiment14["algos"]       = finalAlgos
 
 #################### second cancer dataset ##########################
-'''
-experiment21 = {
-    'description':      '2. cancer dataset',
-    'name':             'experiment2.1',
-    'dataset':          data_factory.loadSecondCancerDataset,
-    'binary_encode':    True,
-    'algos':            dr.getAllAlgos(),
-    'dimensions':       range(4,15),
-    'yValues':          ['rocAuc', 'algoDuration', 'lrDuration']
-}
-'''
+
+experiment21 = experiment11
+experiment21["description"] = "cancer dataset 2"
+experiment21["name"]        = "experiment2.1"
+experiment21["dataset"]     = data_factory.loadSecondCancerDataset
+
+experiment22 = experiment21
+experiment22["name"]        = "experiment2.2"
+experiment22["algos"]       = dr.getAllAlgosExlude(["mds"])
+
+experiment23 = experiment22
+experiment23["name"]        = "experiment2.3"
+experiment23["algos"]       = dr.getAllAlgosExlude(["mds", "tsne"])
+experiment23["dimensions"]  = np.arange(5,65, 5)
+
+experiment24 = experiment23
+experiment24["name"]        = "experiment2.4"
+experiment24["algos"]       = dr.getAllAlgosExlude(["mds", "tsne", "matrix_factorisaton"])
+
+
 #################### plista dataset ##########################
 experiment31 = {
     'description':      '6. plista dataset',
@@ -78,10 +88,20 @@ experiment34["dimensions"]  = np.arange(50, 250, 10)
 experiment35 = experiment34
 experiment35["dataset"]     = data_factory.loadFirstPlistaDataset
 experiment35["name"]        = "experiment3.5"
-experiment35["size"]        = 0.5
-experiment32["algos"]       = dr.getAllAlgosInclude(["pca"])
-experiment35["dimensions"]  = np.arange(50, 250, 10)
+experiment35["size"]        = 0.4
+# experiment35["algos"]       = dr.getAllAlgosInclude(["pca"])
+experiment35["dimensions"]  = [20, 30, 50, 100, 150, 200, 250] #np.arange(50, 250, 10)
 
+experiment36 = {
+    'description':      '6. plista dataset',
+    'name':             'experiment3.1',
+    'dataset':          data_factory.loadSixthPlistaDataset,
+    'size':             0.5,
+    'binary_encode':    False,
+    'algos':            dr.getAllAlgos(),
+    'dimensions':       [20, 30, 50, 100, 150, 200, 250],
+    'yValues':          ['rocAuc', 'algoDuration', 'lrDuration']
+}
 
 
 all = {
@@ -90,11 +110,17 @@ all = {
     "13": experiment13,
     "14": experiment14,
 
+    "21": experiment21,
+    "22": experiment22,
+    "23": experiment23,
+    "24": experiment24,
+
     "31": experiment31,
     "32": experiment32,
     "33": experiment33,
     "34": experiment34,
-    "35": experiment35
+    "35": experiment35,
+    "36": experiment36
 }
 
 if len(sys.argv) != 2:
@@ -104,8 +130,6 @@ if len(sys.argv) != 2:
 params = sys.argv
 
 id = params[1]
-
-print id
 
 if not all.has_key(id):
     print "experiment with id '%s' not found" % id

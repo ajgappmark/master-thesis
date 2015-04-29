@@ -3,6 +3,7 @@ from sklearn.decomposition import PCA, IncrementalPCA, NMF, TruncatedSVD, Kernel
 import time
 from sklearn import random_projection, manifold
 import numpy as np
+from copy import copy
 
 def hash(data, labels, new_dimension):
     print "start hashing trick..."
@@ -42,6 +43,14 @@ def randomProjection(data, labels, new_dimension):
     #print (" took %f" % (end - start))
     return (reduced, end-start)
 
+def sparseRandomProjection(data, label, new_dimension):
+    print ("start sparse random projection...")
+    start = time.time()
+    transformer = random_projection.SparseRandomProjection(n_components=new_dimension)
+    reduced = transformer.fit_transform(data)
+    end = time.time()
+    #print (" took %f" % (end - start))
+    return (reduced, end-start)
 
 def pca(data, labels, new_dimension):
     print "start pca..."
@@ -157,6 +166,7 @@ def spectralEmbedding(data, labels, new_dimension):
 options = {
     'hash': hash,
     'rp': randomProjection,
+    'srp': sparseRandomProjection,
     'pca': pca,
     'incremental_pca': ipca,
     'kernel_pca': kernelPCA,
@@ -179,7 +189,7 @@ def getFewAlgos():
 
 
 def getAllFastAlgos():
-    fastOptions = options
+    fastOptions = getAllAlgos()
     del(fastOptions["matrix_factorisaton"])
     del(fastOptions["tsne"])
     del(fastOptions["mds"])
@@ -193,7 +203,7 @@ def getFasterAlgos():
     return fasterOptions
 
 def getAllAlgos():
-    return options
+    return copy(options)
 
 def getAllAlgosInclude(include):
     allAlgos = getAllAlgos()
