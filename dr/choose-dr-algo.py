@@ -2,6 +2,7 @@ import dr
 import experiment_run as run
 import data_factory
 import numpy as np
+import sys
 
 '''
     documentation of this experiments in google docs, results on github
@@ -68,11 +69,46 @@ experiment32["algos"]       = dr.getAllAlgosInclude(["rp", "pca", "hash"])
 
 experiment33 = experiment32
 experiment33["name"]        = "experiment3.3"
-print experiment33
-print experiment33['size']
-
 del(experiment33['size'])
 
+experiment34 = experiment33
+experiment34["name"]        = "experiment3.4"
+experiment34["dimensions"]  = np.arange(50, 250, 10)
+
+experiment35 = experiment34
+experiment35["dataset"]     = data_factory.loadFirstPlistaDataset
+experiment35["name"]        = "experiment3.5"
+experiment35["size"]        = 0.5
+experiment32["algos"]       = dr.getAllAlgosInclude(["pca"])
+experiment35["dimensions"]  = np.arange(50, 250, 10)
 
 
-run.execute(experiment32)
+
+all = {
+    "11": experiment11,
+    "12": experiment12,
+    "13": experiment13,
+    "14": experiment14,
+
+    "31": experiment31,
+    "32": experiment32,
+    "33": experiment33,
+    "34": experiment34,
+    "35": experiment35
+}
+
+if len(sys.argv) != 2:
+    print "only / max one param allowed"
+    exit()
+
+params = sys.argv
+
+id = params[1]
+
+print id
+
+if not all.has_key(id):
+    print "experiment with id '%s' not found" % id
+    exit()
+
+run.execute(all[id])

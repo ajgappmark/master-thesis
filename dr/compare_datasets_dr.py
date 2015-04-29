@@ -57,9 +57,6 @@ for i in range(len(dataSets)):
     print np.shape(label)
     analyze(data, label)
 
-
-
-
     plt.subplot(111)
     plt.figure(i)
     plt.title("%s - %s" % (desc, metric))
