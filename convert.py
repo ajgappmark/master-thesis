@@ -72,22 +72,22 @@ def loadFirst():
     return data, labels
 
 def loadSecond():
-    data, labels = convert("%s/export_sparse_publisher_vectors_11_33158,970,13725_hour_3-1 " % folder)
+    data, labels = convert("%s/export_sparse_publisher_vectors_11_33158,970,13725_hour_3-1.csv" % folder)
     return data, labels
 
 def loadThird():
-    data, labels = convert("%s/export_sparse_publisher_vectors_11_33158,970,13725_hour_4-1 " % folder)
+    data, labels = convert("%s/export_sparse_publisher_vectors_11_33158,970,13725_hour_4-1.csv" % folder)
     return data, labels
 
 def loadFirth():
-    data, labels = convert("%s/export_sparse_publisher_vectors_11_33158,970,13725,970,4787_hour_4-1 " % folder)
+    data, labels = convert("%s/export_sparse_publisher_vectors_11_33158,970,13725,970,4787_hour_4-1.csv" % folder)
     return data, labels
 
 def loadFifth():
-    data, labels = convert("%s/export_sparse_publisher_vectors_11_13725,5335_hour_2-1 " % folder)
+    data, labels = convert("%s/export_sparse_publisher_vectors_11_13725,5335_hour_2-1.csv" % folder)
     return data, labels
 
 
 def loadSixth():
-    data, labels = convert("%s/export_sparse_publisher_vectors_11_970_hour_2-1 " % folder)
+    data, labels = convert("%s/export_sparse_publisher_vectors_11_970_hour_2-1.csv" % folder)
     return data, labels
