@@ -109,11 +109,11 @@ def nnMatrixFactorisation(data, labels, new_dimension):
 def tsne(data, labels, new_dimension):
     print "tsne..."
 
-    if hasattr(data, "toarray"):
-        data = data.toarray()
+    #if hasattr(data, "toarray"):
+    #    data = data.toarray()
 
     start = time.time()
-    tsne = manifold.TSNE(n_components=new_dimension)
+    tsne = manifold.TSNE(n_components=new_dimension, learning_rate=500)
     reduced = tsne.fit_transform(data)
     end = time.time()
     return (reduced, end-start)

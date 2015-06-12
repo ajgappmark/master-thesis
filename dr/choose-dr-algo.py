@@ -95,11 +95,11 @@ experiment35["dimensions"]  = [20, 30, 50, 100, 150, 200, 250] #np.arange(50, 25
 experiment36 = {
     'description':      '6. plista dataset',
     'name':             'experiment3.1',
-    'dataset':          data_factory.loadSixthPlistaDataset,
-    'size':             0.5,
+    'dataset':          data_factory.loadSecondPlistaDataset,
+    'size':             0.01,
     'binary_encode':    False,
-    'algos':            dr.getAllAlgos(),
-    'dimensions':       [20, 30, 50, 100, 150, 200, 250],
+    'algos':            dr.getAllAlgosInclude(["tsne"]),
+    'dimensions':       [3,4,5, 10, 15, 20],
     'yValues':          ['rocAuc', 'algoDuration', 'lrDuration']
 }
 
