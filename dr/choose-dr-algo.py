@@ -28,34 +28,34 @@ experiment12 = {
     'yValues':          ['rocAuc', 'algoDuration', 'lrDuration']
 }
 
-experiment13                = experiment12
+experiment13                = experiment12.copy()
 experiment13["description"] = "same algos, but more dimensions"
 experiment13["name"]        = "experiment1.3"
 experiment13["dimensions"]  = np.arange(50,250, 10)
 
 finalAlgos = dr.getAllAlgosInclude(["rp", "hash", "pca", "isomap"])
-experiment14                = experiment13
+experiment14                = experiment13.copy()
 experiment14["description"] = "final algos for that dataset"
 experiment14["name"]        = "experiment1.4"
 experiment14["algos"]       = finalAlgos
 
 #################### second cancer dataset ##########################
 
-experiment21 = experiment11
+experiment21 = experiment11.copy()
 experiment21["description"] = "cancer dataset 2"
 experiment21["name"]        = "experiment2.1"
 experiment21["dataset"]     = data_factory.loadSecondCancerDataset
 
-experiment22 = experiment21
+experiment22 = experiment21.copy()
 experiment22["name"]        = "experiment2.2"
 experiment22["algos"]       = dr.getAllAlgosExlude(["mds"])
 
-experiment23 = experiment22
+experiment23 = experiment22.copy()
 experiment23["name"]        = "experiment2.3"
 experiment23["algos"]       = dr.getAllAlgosExlude(["mds", "tsne"])
 experiment23["dimensions"]  = np.arange(5,65, 5)
 
-experiment24 = experiment23
+experiment24 = experiment23.copy()
 experiment24["name"]        = "experiment2.4"
 experiment24["algos"]       = dr.getAllAlgosExlude(["mds", "tsne", "matrix_factorisaton"])
 
@@ -122,6 +122,8 @@ all = {
     "35": experiment35,
     "36": experiment36
 }
+
+print "hey"
 
 if len(sys.argv) != 2:
     print "only / max one param allowed"

@@ -25,11 +25,22 @@ def durationRocAuc(algo, data, label, dimension):
     return duration, reduced, score.mean()
 
 def measureFitLR(data, label):
-    start = time.time()
-    lr = linear_model.LogisticRegression()
-    lr.fit(data, label)
-    end = time.time()
-    return end - start
+
+    # measure for 10 times and avg
+    sum = list()
+    for i in range(0, 10):
+        print i
+
+        start = time.time()
+        lr = linear_model.LogisticRegression()
+        lr.fit(data, label)
+        end = time.time()
+        sum.append(end - start)
+    print "-----"
+    print sum
+    print np.mean(sum)
+    print
+    return np.mean(sum)
 
 
 #testSetPercentage = 0.1
@@ -132,7 +143,7 @@ def runExperimentForMetric(data, label, algos, dimensions):
 
 def setupExperimentFolder(experiment):
     outputFolder = os.path.dirname(os.path.abspath(__file__))
-    outputFolder = "%s/experiments/%s" % (outputFolder, experiment["name"])
+    outputFolder = "%s/experiments_new/%s" % (outputFolder, experiment["name"])
     if not os.path.exists(outputFolder):
         os.makedirs(outputFolder)
     print
