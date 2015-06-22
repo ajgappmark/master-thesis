@@ -59,6 +59,9 @@ experiment24 = experiment23.copy()
 experiment24["name"]        = "experiment2.4"
 experiment24["algos"]       = dr.getAllAlgosExlude(["mds", "tsne", "matrix_factorisaton"])
 
+experiment25 = experiment24.copy()
+experiment25["name"]        = "experiment2.5"
+experiment25["algos"]       = dr.getAllAlgosInclude(["rp", "hash", "incremental_pca", "pca"])
 
 #################### plista dataset ##########################
 experiment31 = {
@@ -103,6 +106,48 @@ experiment36 = {
     'yValues':          ['rocAuc', 'algoDuration', 'lrDuration']
 }
 
+#################### plista dataset ##########################
+experiment41 = {
+    'description':      '6. plista dataset',
+    'name':             'experiment4.1',
+    'dataset':          data_factory.loadSixthPlistaDataset,
+    'size':             0.1,
+    'binary_encode':    False,
+    'algos':            dr.getAllAlgosExlude(["tsne", "lle"]),
+    'dimensions':       range(4,8),
+    'yValues':          ['rocAuc', 'algoDuration', 'lrDuration']
+}
+
+experiment42 = experiment41.copy()
+experiment42["algos"] = dr.getAllAlgosExlude(["tsne", "lle", "kernel_pca", "spectralEmbedding", "mds", "isomap"])
+experiment42["name"]  = "experiment4.2"
+
+experiment43 = experiment42.copy()
+experiment43["name"]  = "experiment4.3"
+experiment43["dimensions"] = np.arange(10,35, 5)
+
+experiment44 = experiment43.copy()
+experiment44["name"]  = "experiment4.4"
+experiment44["algos"] = dr.getAllAlgosExlude(["matrix_factorisaton", "tsne", "lle", "kernel_pca", "spectralEmbedding", "mds", "isomap"])
+experiment44["dimensions"] = np.arange(10,100, 10)
+
+experiment45 = experiment44.copy()
+experiment45["name"]  = "experiment4.5"
+experiment45["algos"] = dr.getAllAlgosInclude(["hash", "rp", "pca"])
+experiment45["dimensions"] = np.arange(50,250, 50)
+experiment45["size"] = 0.2
+
+experiment46 = experiment45.copy()
+experiment46["name"]  = "experiment4.6"
+experiment46["algos"] = dr.getAllAlgosInclude(["no_DR", "hash", "rp", "pca"])
+experiment46["size"] = 0.2
+experiment46["dimensions"] = np.arange(50,450, 50)
+
+experiment47 = experiment46.copy()
+experiment47["name"]  = "experiment4.7"
+experiment47["size"] = 0.3
+
+
 
 all = {
     "11": experiment11,
@@ -114,13 +159,22 @@ all = {
     "22": experiment22,
     "23": experiment23,
     "24": experiment24,
+    "25": experiment25,
 
     "31": experiment31,
     "32": experiment32,
     "33": experiment33,
     "34": experiment34,
     "35": experiment35,
-    "36": experiment36
+    "36": experiment36,
+
+    "41": experiment41,
+    "42": experiment42,
+    "43": experiment43,
+    "44": experiment44,
+    "45": experiment45,
+    "46": experiment46,
+    "47": experiment47
 }
 
 print "hey"

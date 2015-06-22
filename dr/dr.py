@@ -5,6 +5,10 @@ from sklearn import random_projection, manifold
 import numpy as np
 from copy import copy
 
+def noDR(data, labels, new_dimension):
+    return (data, 0.0)
+
+
 def hash(data, labels, new_dimension):
     print "start hashing trick..."
     # convert features as dict
@@ -164,6 +168,7 @@ def spectralEmbedding(data, labels, new_dimension):
     return (reduced, end-start)
 
 options = {
+    'no_DR': noDR,
     'hash': hash,
     'rp': randomProjection,
     'srp': sparseRandomProjection,
