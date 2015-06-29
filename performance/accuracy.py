@@ -32,8 +32,6 @@ def drawGraphForDatasets(datasets, fileName, item, trainBlockSizes, metric, ylim
         data = trainDataBlocks[0][0]
         label = trainLabelBlocks[0][0]
 
-
-
         analyze(data, label)
 
         maxItemsInDataset = len(label)

@@ -6,6 +6,8 @@ import numpy as np
 from copy import copy
 
 def noDR(data, labels, new_dimension):
+    if hasattr(data, "toarray"):
+        data = data.toarray()
     return (data, 0.0)
 
 

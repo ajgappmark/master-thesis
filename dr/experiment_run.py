@@ -36,6 +36,7 @@ def measureFitLR(data, label):
         lr.fit(data, label)
         end = time.time()
         sum.append(end - start)
+
     print "-----"
     print sum
     print np.mean(sum)

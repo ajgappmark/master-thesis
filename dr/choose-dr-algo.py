@@ -37,7 +37,9 @@ finalAlgos = dr.getAllAlgosInclude(["rp", "hash", "pca", "isomap"])
 experiment14                = experiment13.copy()
 experiment14["description"] = "final algos for that dataset"
 experiment14["name"]        = "experiment1.4"
-experiment14["algos"]       = finalAlgos
+experiment14["algos"]       = dr.getAllAlgosInclude(["no_DR", "rp", "hash", "pca", "isomap"])
+experiment14["dimensions"]  = np.arange(10,70, 10)
+
 
 #################### second cancer dataset ##########################
 
@@ -61,7 +63,8 @@ experiment24["algos"]       = dr.getAllAlgosExlude(["mds", "tsne", "matrix_facto
 
 experiment25 = experiment24.copy()
 experiment25["name"]        = "experiment2.5"
-experiment25["algos"]       = dr.getAllAlgosInclude(["rp", "hash", "incremental_pca", "pca"])
+experiment25["algos"]       = dr.getAllAlgosInclude(["no_DR", "rp", "hash", "incremental_pca", "pca"])
+experiment25["dimensions"]  = np.arange(5, 15)
 
 #################### plista dataset ##########################
 experiment31 = {
@@ -128,26 +131,49 @@ experiment43["dimensions"] = np.arange(10,35, 5)
 
 experiment44 = experiment43.copy()
 experiment44["name"]  = "experiment4.4"
-experiment44["algos"] = dr.getAllAlgosExlude(["matrix_factorisaton", "tsne", "lle", "kernel_pca", "spectralEmbedding", "mds", "isomap"])
+experiment44["algos"] = dr.getAllAlgosInclude(["rp", "srp", "hash", "incremental_pca", "pca", "truncated_svd"])
 experiment44["dimensions"] = np.arange(10,100, 10)
 
 experiment45 = experiment44.copy()
 experiment45["name"]  = "experiment4.5"
-experiment45["algos"] = dr.getAllAlgosInclude(["hash", "rp", "pca"])
-experiment45["dimensions"] = np.arange(50,250, 50)
 experiment45["size"] = 0.2
 
 experiment46 = experiment45.copy()
 experiment46["name"]  = "experiment4.6"
-experiment46["algos"] = dr.getAllAlgosInclude(["no_DR", "hash", "rp", "pca"])
-experiment46["size"] = 0.2
-experiment46["dimensions"] = np.arange(50,450, 50)
+experiment46["algos"] = dr.getAllAlgosInclude(["no_DR", "rp", "srp", "hash", "truncated_svd"])
+experiment46["size"] = 0.3
+experiment46["dimensions"] = np.arange(20,350, 50)
 
 experiment47 = experiment46.copy()
 experiment47["name"]  = "experiment4.7"
 experiment47["size"] = 0.3
 
+experiment48 = experiment47.copy()
+experiment48["name"]  = "experiment4.8"
+experiment48["size"] = 0.4
 
+experiment49 = experiment48.copy()
+experiment49["name"]  = "experiment4.9"
+experiment49["dataset"] = data_factory.loadFirstPlistaDataset
+
+experiment410 = experiment48.copy()
+experiment410["name"]  = "experiment4.10"
+experiment410["size"] = 0.5
+experiment410["dimensions"] = np.arange(5,30, 5)
+
+experiment411 = experiment48.copy()
+experiment411["name"]  = "experiment4.11"
+experiment411["size"] = 0.6
+experiment411["dimensions"] = np.arange(5,10)
+
+experiment412 = experiment411.copy()
+experiment412["name"]  = "experiment4.12"
+experiment412["size"] = 0.6
+experiment412["algos"] = dr.getAllAlgosInclude(["no_DR", "hash"])
+
+#################### plista dataset ##########################
+
+# MEMORY ERROR TSNE -> 4 dimensions
 
 all = {
     "11": experiment11,
@@ -174,8 +200,27 @@ all = {
     "44": experiment44,
     "45": experiment45,
     "46": experiment46,
-    "47": experiment47
+    "47": experiment47,
+    "48": experiment48,
+    "49": experiment49,
+    "410": experiment410,
+    "411": experiment411,
+    "412": experiment412,
+
+
 }
+experiment51 = {
+    'description':      '2. plista dataset',
+    'name':             'experiment4.1',
+    'dataset':          data_factory.loadSecondPlistaDataset,
+    'size':             0.05,
+    'binary_encode':    False,
+    'algos':            dr.getAllAlgos(),
+    'dimensions':       range(4,11),
+    'yValues':          ['rocAuc', 'algoDuration', 'lrDuration']
+}
+
+
 
 print "hey"
 
