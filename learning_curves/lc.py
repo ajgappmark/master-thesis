@@ -15,32 +15,36 @@ trainBlockSizes = np.arange(0.01, 0.8, 0.05)
 testSetPercentage = 0.2
 
 def rocAuc(trainData, trainLabel, testData, testLabel):
-    regr = linear_model.LogisticRegression()
-    regr.fit(trainData, trainLabel)
 
-    trainScores = regr.score(trainData, trainLabel)
-    testScores = regr.score(testData, testLabel)
+    train = list()
+    test = list()
 
-    trainProba = regr.predict_proba(trainData)
-    testProba = regr.predict_proba(testData)
+    for k in range(0, 5):
+        regr = linear_model.LogisticRegression()
+        regr.fit(trainData, trainLabel)
 
-    trainPosivieLabelProba = trainProba[:, 1]
-    testPosivieLabelProba = testProba[:, 1]
+        trainScores = regr.score(trainData, trainLabel)
+        testScores = regr.score(testData, testLabel)
 
-    a = np.array(trainLabel)
-    b = np.array(trainPosivieLabelProba)
+        trainProba = regr.predict_proba(trainData)
+        testProba = regr.predict_proba(testData)
 
-    c = np.array(testLabel)
-    d = np.array(testPosivieLabelProba)
+        trainPosivieLabelProba = trainProba[:, 1]
+        testPosivieLabelProba = testProba[:, 1]
 
-    trainRoc_auc = metrics.roc_auc_score(a, b)
-    testRoc_auc = metrics.roc_auc_score(c, d)
+        a = np.array(trainLabel)
+        b = np.array(trainPosivieLabelProba)
 
-    #return trainScores, testScores
-    return trainRoc_auc, testRoc_auc
+        c = np.array(testLabel)
+        d = np.array(testPosivieLabelProba)
 
-    #score = cross_validation.cross_val_score(regr, data, labels, scoring=metric).mean()
-    #return score
+        trainRoc_auc = metrics.roc_auc_score(a, b)
+        testRoc_auc = metrics.roc_auc_score(c, d)
+
+        train.append(trainRoc_auc)
+        test.append(testRoc_auc)
+
+    return np.mean(train), np.mean(test)
 
 def getLearningCurve(data, label):
     #maxItemsInDataset = len(label)
@@ -122,4 +126,4 @@ for i in range(len(dataSets)):
 
 
     plt.legend(loc="best")
-    plt.savefig("output/curve_%s.png" % (desc), dpi=320)
+    plt.savefig("output_new/curve_%s.png" % (desc), dpi=320)
