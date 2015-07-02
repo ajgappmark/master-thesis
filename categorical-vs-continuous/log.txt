@@ -1,0 +1,10 @@
+##### predict the price for houses (rooms) #####
+rooms: 4
+prediction: [[ 42.57692308]]
+
+##### predict the price for houses (house category) #####
+ID of category 'cottage': 40
+prediction: [[ 68.07142857]]
+
+changed ID of category 'cottage': 60
+prediction: [[ 95.58571429]]

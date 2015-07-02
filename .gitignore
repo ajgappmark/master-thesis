@@ -1,6 +1,6 @@
 data/old
-data/*.csv
-data/*.csv~
+data/*1.csv
+data/*1.csv~
 dr/output/
 learning_curves/output/
 performance/output/

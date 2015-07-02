@@ -7,6 +7,8 @@ datasets = [
             ["https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/", "breast-cancer-wisconsin.data"]
           ]
 
+downloadFolder = "data/"
+
 def getLocalFolder(file):
     folder = os.path.dirname(os.path.abspath(__file__))
     return "%s/%s" %(folder, file)
@@ -18,14 +20,15 @@ def fileExists(file):
 def downloadFile(urlFolder, fileName):
     response = urllib2.urlopen(urlFolder+fileName)
     data = response.read()
-    fileName = getLocalFolder(fileName)
+    fileName = getLocalFolder("")+downloadFolder+fileName
+
     print fileName
     file = open(fileName, 'w+')
     file.write(data)
     file.close
 
 def fileToVector(file, processRow):
-    file = getLocalFolder(file)
+    file = getLocalFolder("")+downloadFolder+file
     d = open(file, 'r')
     lines = [line.rstrip('\r\n') for line in d]
     rows = len(lines)
@@ -123,8 +126,8 @@ def loadBothDatasets():
     for item in datasets:
         urlFolder = item[0]
         file = item[1]
-
-        if not fileExists(file):
+        localFile = downloadFolder+file
+        if not fileExists(localFile):
             downloadFile(urlFolder, file)
 
     # load both in memory
