@@ -21,3 +21,5 @@ def analyze(data, label, description = "analyze data"):
 
     print "'0'-labeled data: %s (%.4f %%)" % (negativeExamples, negativePercentage)
     print "'1'-labeled data: %s (%.4f %%)" % (positiveExamples, positivePercentage)
+
+    return negativeExamples, negativePercentage, positiveExamples, positivePercentage

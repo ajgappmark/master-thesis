@@ -16,9 +16,9 @@ regr.fit(X, Y)
 plt.grid()
 plt.title("continuous values")
 plt.xlabel("amount of rooms")
-plt.ylabel("price of house ($)")
+plt.ylabel("price of house (in thousand $)")
 
-plt.scatter(X, Y, label='data points',  color='black')
+plt.scatter(X, Y, label='data oints',  color='black')
 plt.plot(X, regr.predict(X), label='approximated values', color='blue', linewidth=3)
 
 plt.subplot(122)

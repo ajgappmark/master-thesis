@@ -1,0 +1,31 @@
+##### printing the size of each dataset #####
+dataset 'cancer 1':
+rows:569, dimensions:30
+negative observations: 357.0 (62.74 %)
+positive observations: 212.0 (37.26 %)
+
+dataset 'cancer 2':
+rows:699, dimensions:9
+negative observations: 458.0 (65.52 %)
+positive observations: 241.0 (34.48 %)
+
+dataset 'impressions 1':
+rows:305951, dimensions:1158
+negative observations: 305590.0 (99.88 %)
+positive observations: 361.0 (0.12 %)
+
+dataset 'impressions 2':
+rows:446838, dimensions:1284
+negative observations: 446316.0 (99.88 %)
+positive observations: 522.0 (0.12 %)
+
+dataset 'impressions 3':
+rows:556575, dimensions:1375
+negative observations: 555935.0 (99.89 %)
+positive observations: 640.0 (0.11 %)
+
+dataset 'impressions 4':
+rows:930013, dimensions:1518
+negative observations: 928970.0 (99.89 %) 
+positive observations: 1043.0 (0.11 %) 
+
