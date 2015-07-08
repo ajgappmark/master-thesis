@@ -61,7 +61,7 @@ sqrt(n) with 1/2*sqrt(n)
 '''
 def sparse_2(n = 50):
     scale = np.sqrt(n)
-    bound = (1.0/(2*np.sqrt(50) )) * 100
+    bound = (1.0/(2*np.sqrt(n) )) * 100
     rand = getRand()
     if rand > 50 and rand <= 50+bound:
        return scale
@@ -89,10 +89,10 @@ def sparse_3(n = 50):
     s = 1.0 / density
 
     ret = np.sqrt(s) / np.sqrt(n)
-    bound = (1.0/(2*n)) * 100
+    bound = 1.0/2.0*n
     rand = getRand()
     if rand < bound:
-       return ret
+        return ret
     elif rand > 100-bound:
         return -ret
     else:
