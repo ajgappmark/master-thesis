@@ -21,7 +21,7 @@ with open('log.txt', 'w') as file:
         draw = distributions[key]
         results = dict()
         # draw for 1000 times
-        for i in range(0, 10000):
+        for i in range(0, 100000):
             result = draw()
             if result in results:
                 results[result] += 1
@@ -30,6 +30,6 @@ with open('log.txt', 'w') as file:
 
         file.write("###### '%s' ######' \n"  % key)
         for res_key in results.iterkeys():
-            file.write("'%s' : %.2f%% \n" % (res_key, results[res_key] / 100.0))
+            file.write("'%s' : %.2f%% \n" % (res_key, results[res_key] / 1000.0))
 
         file.write("\n")

@@ -1,14 +1,17 @@
 import random
 import numpy as np
 
+def getRand():
+    return random.randrange(0,100)
+
 '''
 dense density distribution
 +1 with 1/2
 -1 with 1/2
 '''
 def dense_1():
-    rand = random.random()
-    if rand < 0.5:
+    rand = getRand()
+    if rand < 50:
        return 1
     else:
        return -1
@@ -22,8 +25,8 @@ m refers to the amount of observations
 1/m with 1/2
 '''
 def dense_2(m = 50):
-    rand = random.random()
-    if rand < 0.5:
+    rand = getRand()
+    if rand < 50:
        return 0
     else:
        return 1.0/m
@@ -37,11 +40,11 @@ sparse density distribution
 '''
 def sparse_1():
     scale = np.sqrt(3)
-    bound = 1.0/6.0
-    rand = random.random()
+    bound = (1.0/6.0)*100
+    rand = getRand()
     if rand < bound:
        return scale
-    elif rand > 1-bound:
+    elif rand > 100-bound:
         return -scale
     else:
         return 0
@@ -58,11 +61,11 @@ sqrt(n) with 1/2*sqrt(n)
 '''
 def sparse_2():
     scale = np.sqrt(3)
-    bound = 1.0/6.0
-    rand = random.random()
+    bound = (1.0/6.0)*100
+    rand = getRand()
     if rand < bound:
        return scale
-    elif rand > 1-bound:
+    elif rand > 100-bound:
         return -scale
     else:
         return 0
@@ -79,11 +82,11 @@ sqrt(n) with 1/2*sqrt(n)
 def sparse_3(n = 50):
     scale = np.sqrt(n)
     sqrt = np.sqrt(n)
-    bound = 1.0/(2*sqrt )
-    rand = random.random()
+    bound = (1.0/(2*sqrt )) * 100
+    rand = getRand()
     if rand < bound:
        return scale
-    elif rand > 1-bound:
+    elif rand > 100-bound:
         return -scale
     else:
         return 0
@@ -107,11 +110,11 @@ def sparse_4(n = 50):
     s = 1.0 / density
 
     ret = np.sqrt(s) / np.sqrt(n)
-    bound = 1.0/(2*n)
-    rand = random.random()
+    bound = (1.0/(2*n)) * 100
+    rand = getRand()
     if rand < bound:
        return ret
-    elif rand > 1-bound:
+    elif rand > 100-bound:
         return -ret
     else:
         return 0
