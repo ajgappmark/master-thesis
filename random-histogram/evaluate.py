@@ -32,7 +32,7 @@ print list(buckets.iterkeys())
 
 plt.bar(list(buckets.iterkeys()), list(buckets.values()), 0.01, color="black")
 plt.grid()
-plt.title("histogram of python's random.random()")
+plt.title("histogram of python's random.randrange()")
 plt.xlabel("bins")
 plt.ylabel("amount of hits / bin")
 folder = os.path.dirname(os.path.abspath(__file__))
