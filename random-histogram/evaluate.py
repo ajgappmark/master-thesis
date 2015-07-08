@@ -28,6 +28,8 @@ for i in range(0,iterations):
 
 buckets = collections.OrderedDict(buckets)
 
+print list(buckets.iterkeys())
+
 plt.bar(list(buckets.iterkeys()), list(buckets.values()), 0.01, color="black")
 plt.grid()
 plt.title("histogram of python's random.random()")
