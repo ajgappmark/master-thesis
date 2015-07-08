@@ -22,4 +22,15 @@ def analyze(data, label, description = "analyze data"):
     print "'0'-labeled data: %s (%.4f %%)" % (negativeExamples, negativePercentage)
     print "'1'-labeled data: %s (%.4f %%)" % (positiveExamples, positivePercentage)
 
-    return negativeExamples, negativePercentage, positiveExamples, positivePercentage
+    zero_entries = list()
+    non_zero_entries = list()
+    for item in data:
+        if hasattr(item, "toarray"):
+            item = item.toarray()[0]
+
+        non_zero = np.nonzero(item)[0].size
+        non_zero_entries.append(non_zero)
+        zero_entries.append(item.size - non_zero)
+
+
+    return negativeExamples, negativePercentage, positiveExamples, positivePercentage, np.mean(zero_entries), np.mean(non_zero_entries)
