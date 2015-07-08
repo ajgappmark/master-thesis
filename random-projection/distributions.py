@@ -7,7 +7,6 @@ dense density distribution
 -1 with 1/2
 '''
 def dense_1():
-    random.seed()
     rand = random.random()
     if rand < 0.5:
        return 1
@@ -23,7 +22,6 @@ m refers to the amount of observations
 1/m with 1/2
 '''
 def dense_2(m = 50):
-    random.seed()
     rand = random.random()
     if rand < 0.5:
        return 0
@@ -40,7 +38,6 @@ sparse density distribution
 def sparse_1():
     scale = np.sqrt(3)
     bound = 1.0/6.0
-    random.seed()
     rand = random.random()
     if rand < bound:
        return scale
@@ -62,7 +59,6 @@ sqrt(n) with 1/2*sqrt(n)
 def sparse_2():
     scale = np.sqrt(3)
     bound = 1.0/6.0
-    random.seed()
     rand = random.random()
     if rand < bound:
        return scale
@@ -84,7 +80,6 @@ def sparse_3(n = 50):
     scale = np.sqrt(n)
     sqrt = np.sqrt(n)
     bound = 1.0/(2*sqrt )
-    random.seed()
     rand = random.random()
     if rand < bound:
        return scale
@@ -113,7 +108,6 @@ def sparse_4(n = 50):
 
     ret = np.sqrt(s) / np.sqrt(n)
     bound = 1.0/(2*n)
-    random.seed()
     rand = random.random()
     if rand < bound:
        return ret
