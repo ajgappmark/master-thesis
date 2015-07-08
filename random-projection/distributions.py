@@ -59,27 +59,7 @@ sqrt(n) with 1/2*sqrt(n)
 0 with 1-(1/sqrt(n))
 
 '''
-def sparse_2():
-    scale = np.sqrt(3)
-    bound = (1.0/6.0)*100
-    rand = getRand()
-    if rand < bound:
-       return scale
-    elif rand > 100-bound:
-        return -scale
-    else:
-        return 0
-
-'''
-sparse density distribution
-n refers to the amount of dimension in the original matrix
-
-sqrt(n) with 1/2*sqrt(n)
--sqrt(n) with 1/2*sqrt(n)
-0 with 1-(1/sqrt(n))
-
-'''
-def sparse_3(n = 50):
+def sparse_2(n = 50):
     scale = np.sqrt(n)
     sqrt = np.sqrt(n)
     bound = (1.0/(2*sqrt )) * 100
@@ -104,7 +84,7 @@ density = 1/sqrt(n)
 sqrt(s) / sqrt(n) with 1/2s
 
 '''
-def sparse_4(n = 50):
+def sparse_3(n = 50):
 
     density = 1.0/np.sqrt(n)
     s = 1.0 / density

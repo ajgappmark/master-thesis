@@ -12,7 +12,6 @@ distributions = {
     "sparse 2": distributions.sparse_2,
     "sparse 3": distributions.sparse_3,
     "dense 2": distributions.dense_2,
-    "sparse 4": distributions.sparse_4,
 }
 
 with open('log.txt', 'w') as file:
