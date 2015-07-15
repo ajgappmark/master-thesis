@@ -7,7 +7,6 @@ def loadFirstCancerDataset():
     data, label = cancerDataSets.loadFirst()
     return data, label, "cancer 1", 0
 
-
 def loadSecondCancerDataset():
     data,label = cancerDataSets.loadSecond()
     return data, label, "cancer 2", 0

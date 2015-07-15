@@ -6,14 +6,8 @@ This file is part of the master thesis about Dimensionality Reduction
 '''
 
 
-distributions = {
-    "dense 1": distributions.dense_1,
-    "sparse 1": distributions.sparse_1,
-    "sparse 2": distributions.sparse_2,
-    "sparse 3": distributions.sparse_3,
-    "dense 2": distributions.dense_2,
-}
 
+distributions = distributions.getAll()
 with open('log.txt', 'w') as file:
     # prove that each distribution behaves as desired
     for key in distributions.iterkeys():
