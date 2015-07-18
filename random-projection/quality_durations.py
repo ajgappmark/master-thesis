@@ -48,10 +48,14 @@ for dataset in datasets.iterkeys():
 
         for key in rand_matrices.iterkeys():
             matrix = rand_matrices[key]
-            start = time.time()
-            reduced = data * matrix
-            duration = time.time() - start
-            durations[key].append(duration)
+
+            avg_durations = []
+            for i in range(0, 20):
+                start = time.time()
+                reduced = data * matrix
+                duration = time.time() - start
+                avg_durations.append(duration)
+            durations[key].append(np.mean(avg_durations))
 
     for key in rand_matrices.iterkeys():
         plt.plot(dimensions, durations[key], label=key )
