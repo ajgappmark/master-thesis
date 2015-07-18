@@ -39,40 +39,26 @@ def runExperiment(setup):
     customDistributions = setup["customDistributions"]
     scikitImplementations = setup["scikitImplementations"]
     data = setup["data"]
-
     data, _,_,_ = data()
     orig_shape = np.shape(data)
     print "orig rows / cols: %s/%s " % (orig_shape[0], orig_shape[1])
-    best_dimension = johnson_lindenstrauss_min_dim(orig_shape[1])
-    print "best dimension: %s " % best_dimension
-
-
-    #dimensions = [best_dimension * 0.2, best_dimension * 0.4, best_dimension * 0.6, best_dimension * 0.8,
-    #              best_dimension,
-    #              best_dimension * 1.4, best_dimension * 1.4, best_dimension * 1.6, best_dimension * 1.8]
-
     dimensions = np.arange(50, 350, 50)
-
     plt.xlabel("dimensions")
     plt.ylabel("error")
-
     plt.grid()
-
     for key in customDistributions:
         dist = customDistributions[key]
-
         errors = []
         for dimension in dimensions:
-            # randomMatrix = rp.buildMatrix(orig_shape[1], dimension, dist)
-            randomMatrix = dist(orig_shape[0], orig_shape[1], dimension)
-
-
-            # dd = np.mat(data)
-            if isinstance(randomMatrix, np.ndarray):
-                randomMatrix = csr_matrix(randomMatrix)
-            reduced = data * randomMatrix
-            error = getError(data, reduced)
-            errors.append(error)
+            avg_errors = []
+            for k in range(0, 20):
+                randomMatrix = dist(orig_shape[0], orig_shape[1], dimension)
+                if isinstance(randomMatrix, np.ndarray):
+                    randomMatrix = csr_matrix(randomMatrix)
+                reduced = data * randomMatrix
+                error = getError(data, reduced)
+                avg_errors.append(error)
+            errors.append(np.mean(avg_errors))
         print "%s: %s" % (key, errors)
         plt.plot(dimensions, errors, label="%s (%.2f)" %(key, np.mean(errors)))
 
@@ -80,10 +66,15 @@ def runExperiment(setup):
     for key in scikitImplementations:
         errors = []
         for dimension in dimensions:
-            action = scikitImplementations[key]
-            reduced = action(data, int(dimension))
-            error = getError(data, reduced)
-            errors.append(error)
+
+            avg_errors = []
+            for k in range(0, 20):
+
+                action = scikitImplementations[key]
+                reduced = action(data, int(dimension))
+                error = getError(data, reduced)
+                avg_errors.append(error)
+            errors.append(np.mean(avg_errors))
         print "%s: %s" % (key, np.mean(errors))
         plt.plot(dimensions, errors, label="%s (%.2f)" %(key, np.mean(errors)))
 
@@ -151,4 +142,4 @@ experiment8["id"] = 8
 experiment8["data"] = getThirdPlistaData
 
 
-runExperiment(experiment8)
+runExperiment(experiment5)

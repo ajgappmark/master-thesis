@@ -6,7 +6,7 @@ import scikit_rp
 import numpy as np
 
 rows = 570
-columns     = 3000
+columns = 3000
 
 dist = distributions.dense_2
 matrixA = rp.buildMatrix(rows, columns, dist)
