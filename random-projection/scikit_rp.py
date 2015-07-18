@@ -9,6 +9,9 @@ from sklearn.random_projection import SparseRandomProjection, GaussianRandomProj
 def getGaussianRP(new_dimension):
     return GaussianRandomProjection(n_components=new_dimension)
 
+def getSparseRP(new_dimension):
+    return SparseRandomProjection(n_components=new_dimension)
+
 # scikit-learn implementation: gaussian matrix
 def gaussianRP(data, new_dimension):
     rp = getGaussianRP(new_dimension)
@@ -16,5 +19,5 @@ def gaussianRP(data, new_dimension):
 
 # scikit-learn implementation: sparse matrix
 def sparseRP(data, new_dimension):
-    rp = SparseRandomProjection(n_components=new_dimension)
+    rp = getSparseRP(new_dimension)
     return rp.fit_transform(data)

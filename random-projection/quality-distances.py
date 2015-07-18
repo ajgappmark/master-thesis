@@ -126,6 +126,14 @@ def getSecondPlistaData():
     trainDataBlocks, trainLabelBlocks, testDataBlocks, testLabelBlocks = df.splitDatasetInBlocks(data, np.array(label), initialReduceBlockSize, 0.1)
     return trainDataBlocks[0][0], _,_,_
 
+def getThirdPlistaData():
+    data, label, _, _ = df.loadThridPlistaDataset()
+    initialReduceBlockSize = np.arange(0.01, 0.3, 0.1)
+    trainDataBlocks, trainLabelBlocks, testDataBlocks, testLabelBlocks = df.splitDatasetInBlocks(data, np.array(label), initialReduceBlockSize, 0.1)
+    return trainDataBlocks[0][0], _,_,_
+
+
+
 experiment5 = experiment1.copy()
 experiment5["data"] = getFirstPlistaData
 experiment5["id"] = 5
@@ -138,4 +146,9 @@ experiment7 = experiment2.copy()
 experiment7["id"] = 7
 experiment7["data"] = getSecondPlistaData
 
-runExperiment(experiment7)
+experiment8 = experiment2.copy()
+experiment8["id"] = 8
+experiment8["data"] = getThirdPlistaData
+
+
+runExperiment(experiment8)
