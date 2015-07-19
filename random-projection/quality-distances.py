@@ -142,4 +142,4 @@ experiment8["id"] = 8
 experiment8["data"] = getThirdPlistaData
 
 
-runExperiment(experiment5)
+runExperiment(experiment8)

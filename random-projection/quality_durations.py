@@ -4,7 +4,7 @@ import distributions
 import scikit_rp
 import data_factory as df
 import time
-import matplotlib.pyplot as plt
+
 
 datasets = {}
 datasets["cancer_1"] = df.loadFirstCancerDataset
@@ -15,6 +15,7 @@ datasets["plista_3"] = df.loadThridPlistaDataset
 datasets["plista_4"] = df.loadFourthPlistaDataset
 i = 0
 for dataset in datasets.iterkeys():
+    import matplotlib.pyplot as plt
 
     plt.figure(i)
     i = i+1
@@ -22,13 +23,12 @@ for dataset in datasets.iterkeys():
     plt.ylabel('durations in seconds')
     plt.title('dataset: %s' % dataset)
 
-
     data,_,_,_ = datasets[dataset]()
     data = csr_matrix(data)
 
     orig_columns = np.shape(data)[1]
 
-    dimensions = np.arange(10, 110, 10)
+    dimensions = np.arange(50, 350, 50)
     durations = {}
     durations["sparse 2"] = []
     durations["scikit gaussian"] = []
@@ -62,3 +62,4 @@ for dataset in datasets.iterkeys():
     plt.legend(loc="best")
 
     plt.savefig("output/durations/dimensions_vs_durations_%s.png" % dataset, dpi=320)
+    plt.close()
