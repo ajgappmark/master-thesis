@@ -30,7 +30,7 @@ for dataset in datasets.iterkeys():
 
     dimensions = np.arange(50, 350, 50)
     durations = {}
-    durations["sparse 2"] = []
+    durations["dense 2"] = []
     durations["scikit gaussian"] = []
     durations["scikit sparse"] = []
 
@@ -42,7 +42,7 @@ for dataset in datasets.iterkeys():
         matrixB = csc_matrix(np.transpose(scikit_rp.getGaussianRP(dimension)._make_random_matrix(dimension, orig_columns)))
         matrixC = csc_matrix(np.transpose(scikit_rp.getSparseRP(dimension)._make_random_matrix(dimension, orig_columns).toarray()))
 
-        rand_matrices["sparse 2"] = matrixA
+        rand_matrices["dense 2"] = matrixA
         rand_matrices["scikit gaussian"] = matrixB
         rand_matrices["scikit sparse"] = matrixC
 
