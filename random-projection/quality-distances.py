@@ -141,5 +141,4 @@ experiment8 = experiment2.copy()
 experiment8["id"] = 8
 experiment8["data"] = getThirdPlistaData
 
-
-runExperiment(experiment8)
+runExperiment(experiment4)

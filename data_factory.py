@@ -2,13 +2,26 @@ from sklearn import cross_validation
 import cancer_datasets as cancerDataSets
 import numpy as np
 import convert as plistaDataSets
+from sklearn.preprocessing import OneHotEncoder
 
-def loadFirstCancerDataset():
+def loadFirstCancerDataset(dummyCode = True):
     data, label = cancerDataSets.loadFirst()
+
+    if dummyCode:
+        enc = OneHotEncoder()
+        enc.fit(data)
+        data = enc.transform(data).toarray()
+
     return data, label, "cancer 1", 0
 
-def loadSecondCancerDataset():
+def loadSecondCancerDataset(dummyCode = True):
     data,label = cancerDataSets.loadSecond()
+
+    if dummyCode:
+        enc = OneHotEncoder()
+        enc.fit(data)
+        data = enc.transform(data).toarray()
+
     return data, label, "cancer 2", 0
 
 def loadFirstPlistaDataset(size = 0):
