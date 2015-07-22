@@ -38,11 +38,22 @@ for dataset in datasets.iterkeys():
 
         rand_matrices = {}
 
-        matrixA = csc_matrix(np.transpose(np.transpose(distributions.dense_2(0, orig_columns=orig_columns, new_columns=dimension))))
+        matrixDense1 = csc_matrix(np.transpose(np.transpose(distributions.dense_1(0, orig_columns=orig_columns, new_columns=dimension))))
+
+        matrixSparse1 = csc_matrix(np.transpose(np.transpose(distributions.sparse_1(0, orig_columns=orig_columns, new_columns=dimension))))
+        matrixSparse2 = csc_matrix(np.transpose(np.transpose(distributions.sparse_2(0, orig_columns=orig_columns, new_columns=dimension))))
+        matrixSparse3 = csc_matrix(np.transpose(np.transpose(distributions.sparse_3(0, orig_columns=orig_columns, new_columns=dimension))))
+
+        matrixDense2 = csc_matrix(np.transpose(np.transpose(distributions.dense_2(0, orig_columns=orig_columns, new_columns=dimension))))
         matrixB = csc_matrix(np.transpose(scikit_rp.getGaussianRP(dimension)._make_random_matrix(dimension, orig_columns)))
         matrixC = csc_matrix(np.transpose(scikit_rp.getSparseRP(dimension)._make_random_matrix(dimension, orig_columns).toarray()))
 
-        rand_matrices["dense 2"] = matrixA
+        rand_matrices["dense 1"] = matrixDense1
+        rand_matrices["sparse 1"] = matrixSparse1
+        rand_matrices["sparse 2"] = matrixSparse2
+        rand_matrices["sparse 3"] = matrixSparse3
+        rand_matrices["dense 2"] = matrixDense2
+
         rand_matrices["scikit gaussian"] = matrixB
         rand_matrices["scikit sparse"] = matrixC
 

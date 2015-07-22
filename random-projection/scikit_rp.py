@@ -1,6 +1,10 @@
 '''
 Author: Sebastian Alfers
-This file is part of the master thesis about Dimensionality Reduction
+This file is part of the master thesis about Dimensionality Reduction at the HTW-Berlin
+
+see more:
+https://github.com/sebastian-alfers/master-thesis
+http://www.sebalf.de
 '''
 
 from sklearn.random_projection import SparseRandomProjection, GaussianRandomProjection
