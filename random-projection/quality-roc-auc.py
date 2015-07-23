@@ -60,7 +60,7 @@ def runExperiment(setup):
         roc_auc = []
         for dimension in dimensions:
             avg_roc_auc = []
-            for k in range(0, 5):
+            for k in range(0, 20):
                 randomMatrix = dist(orig_shape[0], orig_shape[1], dimension)
                 if isinstance(randomMatrix, np.ndarray):
                     randomMatrix = csr_matrix(randomMatrix)
@@ -150,4 +150,4 @@ experiment8 = experiment2.copy()
 experiment8["id"] = 8
 experiment8["data"] = getThirdPlistaData
 
-runExperiment(experiment8)
+runExperiment(experiment7)
