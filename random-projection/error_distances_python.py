@@ -43,9 +43,6 @@ def getPairwiseDist(matrix):
             #print "from %s to %s = %s" % (matrix[i], matrix[j], dist[entry])
     return count, collections.OrderedDict(sorted(dist.items()))
 
-amount_orig, dist = getPairwiseDist(matrix)
-new_dimension = 5
-
 def evaluatePairwiseDistances(dataset, intrinsicDimension):
 
     rand_matrix = scikit_rp.getSparseRP(intrinsicDimension)._make_random_matrix(intrinsicDimension, orig_dimension)
@@ -83,7 +80,6 @@ def evaluatePairwiseDistances(dataset, intrinsicDimension):
 
 avg_error = 0.0
 folds = range(0, 200)
-
 x = []
 y_orig = []
 y_reduced = []
