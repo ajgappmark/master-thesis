@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 from scipy.sparse import csr_matrix
 import numpy as np
 from scipy.spatial.distance import pdist
@@ -7,9 +13,8 @@ import scikit_rp
 import matplotlib.pyplot as plt
 import csv
 import os.path
-
-
 from numpy.linalg import norm
+
 rows = []
 cols = []
 values = []
@@ -21,7 +26,6 @@ for x in rng:
         values.append(x)
 
 matrix = csr_matrix( (values,(rows,cols))).todense()
-
 orig_dimension = np.shape(matrix)[1]
 
 print("dataset rows: %s" % np.shape(matrix)[0])
@@ -40,9 +44,7 @@ def getPairwiseDist(matrix):
     return count, collections.OrderedDict(sorted(dist.items()))
 
 amount_orig, dist = getPairwiseDist(matrix)
-
 new_dimension = 5
-
 
 def evaluatePairwiseDistances(dataset, intrinsicDimension):
 
@@ -77,41 +79,41 @@ def evaluatePairwiseDistances(dataset, intrinsicDimension):
         sumReduced = sumReduced + reduced_dist_value
         sumError = sumError + error
 
-    #print amount_reduced
-
-    #print "sum of original distances: %s" % sumOrig
-    #print "sum of reduced distances: %s" % sumReduced
-    #print "sum of error distances: %s" % sumError
     return (sumOrig, sumReduced, sumError)
-    #print "first pairwise dist amount of results: %s" % np.shape(dist)[0]
-
-    #print dist
 
 avg_error = 0.0
 folds = range(0, 200)
 
 x = []
-y = []
+y_orig = []
+y_reduced = []
+y_error = []
 for dimension in np.arange(5, 16, 1):
     print "dimension %s" % dimension
     x.append(dimension)
     error_sum = []
+    orig_sum = []
+    reduced_sum = []
     for i in folds:
-        orig, reduce, error = evaluatePairwiseDistances(matrix, new_dimension)
+        orig, reduced, error = evaluatePairwiseDistances(matrix, new_dimension)
         error_sum.append(error)
+        orig_sum.append(orig)
+        reduced_sum.append(reduced)
         # print error_sum
-    y.append(np.mean(error_sum))
+    y_orig.append(np.mean(orig_sum))
+    y_reduced.append(np.mean(reduced_sum))
+    y_error.append(np.mean(error_sum))
 
 outputFolder = os.path.dirname(os.path.abspath(__file__))
 outputFolder = "%s/csv" % outputFolder
 
 with open("%s/result_python.csv" % outputFolder, "wb") as csvfile:
     writer = csv.writer(csvfile, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL)
-    writer.writerow(["x", "y"])
-    for item in zip(x,y):
-        writer.writerow([item[0], item[1]])
+    writer.writerow(["x", "y_orig","y_reduced" ,"y_error"])
+    for item in zip(x,y_orig, y_reduced, y_reduced):
+        writer.writerow([item[0], item[1], item[2], item[3]])
 
-    writer.writerow(["mean", np.mean(y)])
+
 '''
 plt.xlabel("iteration")
 plt.ylabel("error")

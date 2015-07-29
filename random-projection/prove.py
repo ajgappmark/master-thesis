@@ -1,9 +1,12 @@
-import distributions
-
 '''
 Author: Sebastian Alfers
-This file is part of the master thesis about Dimensionality Reduction
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
 '''
+
+import distributions
+
+
 
 
 
