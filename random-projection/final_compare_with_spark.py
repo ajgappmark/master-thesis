@@ -4,6 +4,10 @@ from scipy.spatial.distance import pdist
 from sklearn.metrics.pairwise import euclidean_distances
 import collections
 import scikit_rp
+import matplotlib.pyplot as plt
+import csv
+import os.path
+
 
 from numpy.linalg import norm
 rows = []
@@ -20,51 +24,103 @@ matrix = csr_matrix( (values,(rows,cols))).todense()
 
 orig_dimension = np.shape(matrix)[1]
 
-print("orig rows: %s" % np.shape(matrix)[0])
-print("orig dimension: %s" % orig_dimension)
-print matrix
+print("dataset rows: %s" % np.shape(matrix)[0])
+print("dataset columns: %s" % orig_dimension)
 
 def getPairwiseDist(matrix):
     dist = {}
     rows = np.shape(matrix)[0]
+    count = 0
     for i in range(0, rows):
         for j in range(i+1, rows):
+            count = count +1
             entry = int("%s%s" % (i+1,j+1))
             dist[entry] = norm(matrix[i] - matrix[j])
             #print "from %s to %s = %s" % (matrix[i], matrix[j], dist[entry])
-    return collections.OrderedDict(sorted(dist.items()))
+    return count, collections.OrderedDict(sorted(dist.items()))
 
-dist = getPairwiseDist(matrix)
+amount_orig, dist = getPairwiseDist(matrix)
 
 new_dimension = 5
 
 
-rand_matrix = scikit_rp.getSparseRP(new_dimension)._make_random_matrix(new_dimension, orig_dimension)
-print np.shape(rand_matrix)
-reduced_matrix = matrix * rand_matrix.transpose()
-reduced_dist = getPairwiseDist(reduced_matrix)
+def evaluatePairwiseDistances(dataset, intrinsicDimension):
 
-print "reduced hape:"
+    rand_matrix = scikit_rp.getSparseRP(intrinsicDimension)._make_random_matrix(intrinsicDimension, orig_dimension)
+    reduced_matrix = dataset * rand_matrix.transpose()
+    amount_reduced, reduced_dist = getPairwiseDist(reduced_matrix)
 
-keysOrig = dist.iterkeys()
-keysReduced = reduced_dist.iterkeys()
-for keyz in zip(keysOrig, keysReduced):
-    a = keyz[0]
-    b = keyz[1]
-    if a != b:
-        raise "error. '%s' must be equal to '5s'" % (a, b)
+    sumOrig = 0.0
+    sumReduced = 0.0
+    sumError = 0.0
+    keysOrig = dist.iterkeys()
+    keysReduced = reduced_dist.iterkeys()
+    for keyz in zip(keysOrig, keysReduced):
+        orig = keyz[0]
+        reduced = keyz[1]
 
-    if dist[a] > reduced_dist[b]:
-        d = dist[a] - reduced_dist[b]
-    else:
-        d = reduced_dist[b] - dist[a]
+        orig_dist_value = dist[orig]
+        reduced_dist_value = reduced_dist[reduced]
 
-    print "#%s orig: %s | reducd: %s => %s " % (a, dist[a], reduced_dist[b], d)
+        if orig_dist_value > reduced_dist_value:
+            error = orig_dist_value - reduced_dist_value
+        else:
+            error = reduced_dist_value - orig_dist_value
 
+        if orig != reduced:
+            raise "error. '%s' must be equal to '%s'" % (orig, reduced)
 
+        #print "sum orig of %s -> %s" % (orig, sumOrig + orig_dist_value)
 
+        #print "#%s orig: %s | reducd: %s, error: %s " % (orig, orig_dist_value, reduced_dist_value, error)
+        sumOrig = sumOrig + orig_dist_value
+        sumReduced = sumReduced + reduced_dist_value
+        sumError = sumError + error
 
-#print "first pairwise dist amount of results: %s" % np.shape(dist)[0]
+    #print amount_reduced
 
-#print dist
+    #print "sum of original distances: %s" % sumOrig
+    #print "sum of reduced distances: %s" % sumReduced
+    #print "sum of error distances: %s" % sumError
+    return (sumOrig, sumReduced, sumError)
+    #print "first pairwise dist amount of results: %s" % np.shape(dist)[0]
 
+    #print dist
+
+avg_error = 0.0
+folds = range(0, 200)
+
+x = []
+y = []
+for dimension in np.arange(5, 16, 1):
+    print "dimension %s" % dimension
+    x.append(dimension)
+    error_sum = []
+    for i in folds:
+        orig, reduce, error = evaluatePairwiseDistances(matrix, new_dimension)
+        error_sum.append(error)
+        # print error_sum
+    y.append(np.mean(error_sum))
+
+outputFolder = os.path.dirname(os.path.abspath(__file__))
+outputFolder = "%s/csv" % outputFolder
+
+with open("%s/result_python.csv" % outputFolder, "wb") as csvfile:
+    writer = csv.writer(csvfile, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL)
+    writer.writerow(["x", "y"])
+    for item in zip(x,y):
+        writer.writerow([item[0], item[1]])
+
+    writer.writerow(["mean", np.mean(y)])
+'''
+plt.xlabel("iteration")
+plt.ylabel("error")
+plt.grid()
+
+plt.plot(x, y, label="error of pairwise distances")
+
+plt.legend(loc="best")
+plt.savefig("output/pairwise/pairwise_python.png", dpi=320)
+
+print "mean error %s" % np.mean(y)
+'''
