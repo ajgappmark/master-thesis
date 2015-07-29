@@ -19,18 +19,27 @@ rows = []
 cols = []
 values = []
 matrix_size = 100
-rng = range(0, matrix_size)
+rng = range(0, matrix_size-1)
 for x in rng:
     for y in rng:
         rows.append(x)
         cols.append(y)
-        values.append(x)
+        values.append(float(x+1))
 
 matrix = csr_matrix( (values,(rows,cols))).todense()
+
+print matrix
+
 orig_dimension = np.shape(matrix)[1]
 
 print("dataset rows: %s" % np.shape(matrix)[0])
 print("dataset columns: %s" % orig_dimension)
+
+def euclideanDist(a,b):
+    sum = 0.0
+    for item in zip(a,b):
+        sum = sum + np.power(item[0] - item[1], 2)
+    return np.sqrt(sum)
 
 # compute the pairwise distances
 def getPairwiseDist(matrix):
@@ -42,7 +51,8 @@ def getPairwiseDist(matrix):
             count = count +1
             entry = int("%s%s" % (i+1,j+1))
             # euclidean distances
-            dist[entry] = norm(matrix[i] - matrix[j])
+            dist[entry] = euclideanDist(np.array(matrix[i])[0], np.array(matrix[j])[0])
+            # print("#%s (%s - %s ) -> %s" % (entry, np.array(matrix[i])[0], np.array(matrix[j])[0], dist[entry]))
     return count, collections.OrderedDict(sorted(dist.items()))
 
 # perform the evaluation for this dataset for a given dimension
@@ -51,10 +61,12 @@ def evaluatePairwiseDistances(dataset, intrinsicDimension):
     rand_matrix = scikit_rp.getSparseRP(intrinsicDimension)._make_random_matrix(intrinsicDimension, orig_dimension)
     # perform the reduction
     reduced_matrix = dataset * rand_matrix.transpose()
+
+    amount_orig, dist = getPairwiseDist(matrix)
+
     # call method from above
     amount_reduced, reduced_dist = getPairwiseDist(reduced_matrix)
 
-    amount_orig, dist = getPairwiseDist(matrix)
     sumOrig = 0.0
     sumReduced = 0.0
     sumError = 0.0
