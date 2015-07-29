@@ -28,16 +28,14 @@ def loadFromCSV(file):
 
         return (x,y,np.mean(y))
 
-for i in range(0,3):
-    plt.figure(i)
-    x_spark,y_spark,mean_spark = loadFromCSV("%s/results_pairwise_spark.csv" % folder)
-    x_py,y_py, mean_py = loadFromCSV("%s/result_python.csv" % folder)
-    plt.xlabel("iteration")
-    plt.ylabel("error")
-    plt.grid()
+x_spark,y_spark,mean_spark = loadFromCSV("%s/results_pairwise_spark.csv" % folder)
+x_py,y_py, mean_py = loadFromCSV("%s/result_python.csv" % folder)
+plt.xlabel("iteration")
+plt.ylabel("error")
+plt.grid()
 
-    plt.plot(x_spark, y_spark, label="spark (mean: %.2f)" % mean_spark)
-    plt.plot(x_py, y_py, label="python (mean: %.2f)" % mean_py)
+plt.plot(x_spark, y_spark, label="spark (mean: %.2f)" % mean_spark)
+plt.plot(x_py, y_py, label="python (mean: %.2f)" % mean_py)
 
-    plt.legend(loc="best")
-    plt.savefig("output/pairwise/final_compare_python_spark_%s.png" % i, dpi=320)
+plt.legend(loc="best")
+plt.savefig("output/pairwise/final_compare_python_spark.png", dpi=320)

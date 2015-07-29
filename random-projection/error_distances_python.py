@@ -18,7 +18,8 @@ from numpy.linalg import norm
 rows = []
 cols = []
 values = []
-rng = range(0, 10)
+matrix_size = 100
+rng = range(0, matrix_size)
 for x in rng:
     for y in rng:
         rows.append(x)
@@ -31,6 +32,7 @@ orig_dimension = np.shape(matrix)[1]
 print("dataset rows: %s" % np.shape(matrix)[0])
 print("dataset columns: %s" % orig_dimension)
 
+# compute the pairwise distances
 def getPairwiseDist(matrix):
     dist = {}
     rows = np.shape(matrix)[0]
@@ -39,16 +41,20 @@ def getPairwiseDist(matrix):
         for j in range(i+1, rows):
             count = count +1
             entry = int("%s%s" % (i+1,j+1))
+            # euclidean distances
             dist[entry] = norm(matrix[i] - matrix[j])
-            #print "from %s to %s = %s" % (matrix[i], matrix[j], dist[entry])
     return count, collections.OrderedDict(sorted(dist.items()))
 
+# perform the evaluation for this dataset for a given dimension
 def evaluatePairwiseDistances(dataset, intrinsicDimension):
-
+    # get the random matrix
     rand_matrix = scikit_rp.getSparseRP(intrinsicDimension)._make_random_matrix(intrinsicDimension, orig_dimension)
+    # perform the reduction
     reduced_matrix = dataset * rand_matrix.transpose()
+    # call method from above
     amount_reduced, reduced_dist = getPairwiseDist(reduced_matrix)
 
+    amount_orig, dist = getPairwiseDist(matrix)
     sumOrig = 0.0
     sumReduced = 0.0
     sumError = 0.0
@@ -69,9 +75,6 @@ def evaluatePairwiseDistances(dataset, intrinsicDimension):
         if orig != reduced:
             raise "error. '%s' must be equal to '%s'" % (orig, reduced)
 
-        #print "sum orig of %s -> %s" % (orig, sumOrig + orig_dist_value)
-
-        #print "#%s orig: %s | reducd: %s, error: %s " % (orig, orig_dist_value, reduced_dist_value, error)
         sumOrig = sumOrig + orig_dist_value
         sumReduced = sumReduced + reduced_dist_value
         sumError = sumError + error
@@ -79,7 +82,7 @@ def evaluatePairwiseDistances(dataset, intrinsicDimension):
     return (sumOrig, sumReduced, sumError)
 
 avg_error = 0.0
-folds = range(0, 200)
+folds = range(0, 30)
 x = []
 y_orig = []
 y_reduced = []
@@ -91,7 +94,7 @@ for dimension in np.arange(5, 16, 1):
     orig_sum = []
     reduced_sum = []
     for i in folds:
-        orig, reduced, error = evaluatePairwiseDistances(matrix, new_dimension)
+        orig, reduced, error = evaluatePairwiseDistances(matrix, dimension)
         error_sum.append(error)
         orig_sum.append(orig)
         reduced_sum.append(reduced)
@@ -103,7 +106,7 @@ for dimension in np.arange(5, 16, 1):
 outputFolder = os.path.dirname(os.path.abspath(__file__))
 outputFolder = "%s/csv" % outputFolder
 
-with open("%s/result_python.csv" % outputFolder, "wb") as csvfile:
+with open("%s/result_python_%s.csv" % (outputFolder, matrix_size), "wb") as csvfile:
     writer = csv.writer(csvfile, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL)
     writer.writerow(["x", "y_orig","y_reduced" ,"y_error"])
     for item in zip(x,y_orig, y_reduced, y_reduced):
