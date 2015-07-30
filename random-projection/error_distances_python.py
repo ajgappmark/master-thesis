@@ -117,7 +117,7 @@ outputFolder = "%s/csv" % outputFolder
 with open("%s/result_python_%s.csv" % (outputFolder, matrix_size), "wb") as csvfile:
     writer = csv.writer(csvfile, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL)
     writer.writerow(["x", "y_orig","y_reduced" ,"y_error"])
-    for item in zip(x,y_orig, y_reduced, y_reduced):
+    for item in zip(x,y_orig, y_reduced, y_error):
         writer.writerow([item[0], item[1], item[2], item[3]])
 
 
