@@ -23,6 +23,8 @@ plt.plot(X, regr.predict(X), label='approximated values', color='blue', linewidt
 
 plt.subplot(122)
 
+
+
 # map the category to (integer) value to be able to map in on an axis
 appartement = 10
 bungalow    = 20
@@ -40,7 +42,7 @@ regr_category = linear_model.LinearRegression()
 regr_category.fit(X, Y)
 
 plt.grid()
-plt.title("continuous values")
+plt.title("categorical values")
 plt.xlabel("category of house")
 
 # Plot outputs
