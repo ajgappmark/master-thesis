@@ -6,10 +6,6 @@ License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
 
 import distributions
 
-
-
-
-
 distributions = distributions.getAll()
 with open('log.txt', 'w') as file:
     # prove that each distribution behaves as desired

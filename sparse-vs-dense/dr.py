@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 from sklearn.feature_extraction import FeatureHasher
 from sklearn.decomposition import PCA, IncrementalPCA, NMF, TruncatedSVD, KernelPCA
 import time

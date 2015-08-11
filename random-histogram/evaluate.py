@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 import random
 
 import matplotlib.pyplot as plt
@@ -6,26 +12,21 @@ import numpy as np
 
 import collections
 
-'''
-Author: Sebastian Alfers
-This file is part of the master thesis about Dimensionality Reduction
-'''
-
 iterations = 1000000
 
+#output dict
 buckets = dict()
 for i in range(0,iterations):
     r = random.randrange(0,100)
-    # bucket =  "%.1f" % (r%10)
+    # get bucket
     bucket = float(r)
-    # print bucket
+    # init or update bucket
     if float(bucket) in buckets:
-
         buckets[float(bucket)] += 1
     else:
-        #print float(bucket)
         buckets[float(bucket)] = 1
 
+# order
 buckets = collections.OrderedDict(buckets)
 
 print list(buckets.iterkeys())

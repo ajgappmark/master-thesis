@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 from sklearn.random_projection import SparseRandomProjection, GaussianRandomProjection
 import numpy as np
 from scipy.spatial.distance import euclidean

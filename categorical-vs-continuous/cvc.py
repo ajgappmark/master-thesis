@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn import linear_model
@@ -22,8 +28,6 @@ plt.scatter(X, Y, label='data oints',  color='black')
 plt.plot(X, regr.predict(X), label='approximated values', color='blue', linewidth=3)
 
 plt.subplot(122)
-
-
 
 # map the category to (integer) value to be able to map in on an axis
 appartement = 10

@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 from sklearn.feature_extraction import FeatureHasher
 from sklearn.decomposition import PCA, IncrementalPCA, NMF, TruncatedSVD, KernelPCA
 import time
@@ -5,12 +11,21 @@ from sklearn import random_projection, manifold
 import numpy as np
 from copy import copy
 
+'''
+to be able to compare DR algos with the original dataset,
+this method does not do anything but return the data
+
+this way, it can be uses in iterators and can be treated
+as a normal DR algo
+'''
 def noDR(data, labels, new_dimension):
     if hasattr(data, "toarray"):
         data = data.toarray()
     return (data, 0.0)
 
-
+'''
+feature hashing
+'''
 def hash(data, labels, new_dimension):
     print "start hashing trick..."
     # convert features as dict
@@ -28,7 +43,6 @@ def hash(data, labels, new_dimension):
                     row[str(index)] = value
             dictList.append(row)
 
-        a = 234
     else:
         indices = map(str, range(len(data[0])))
         for row in data:
@@ -40,6 +54,9 @@ def hash(data, labels, new_dimension):
     end = time.time()
     return (reduced, end-start)
 
+'''
+random projection based on dense matrix
+'''
 def randomProjection(data, labels, new_dimension):
     print ("start random projection...")
     start = time.time()
@@ -49,6 +66,9 @@ def randomProjection(data, labels, new_dimension):
     #print (" took %f" % (end - start))
     return (reduced, end-start)
 
+'''
+random projection based on sparse matrix
+'''
 def sparseRandomProjection(data, label, new_dimension):
     print ("start sparse random projection...")
     start = time.time()
@@ -58,6 +78,9 @@ def sparseRandomProjection(data, label, new_dimension):
     #print (" took %f" % (end - start))
     return (reduced, end-start)
 
+'''
+pca
+'''
 def pca(data, labels, new_dimension):
     print "start pca..."
 
@@ -71,6 +94,9 @@ def pca(data, labels, new_dimension):
     end = time.time()
     return (reduced, end-start)
 
+'''
+incremental PCA
+'''
 def ipca(data, labels, new_dimension):
     print "start incremental pca..."
 
@@ -83,6 +109,9 @@ def ipca(data, labels, new_dimension):
     end = time.time()
     return (reduced, end-start)
 
+'''
+kernel PCA
+'''
 def kernelPCA(data, labels, new_dimension):
     print "start kernel pca..."
 
@@ -96,6 +125,9 @@ def kernelPCA(data, labels, new_dimension):
     end = time.time()
     return (reduced, end-start)
 
+'''
+SVD
+'''
 def truncatedSVD(data, labels, new_dimension):
     print "start truncatedSVD..."
     start = time.time()
@@ -104,6 +136,9 @@ def truncatedSVD(data, labels, new_dimension):
     end = time.time()
     return (reduced, end-start)
 
+'''
+Matrix Factorization
+'''
 def nnMatrixFactorisation(data, labels, new_dimension):
     print "non negative matrix factorisation..."
     start = time.time()
@@ -112,6 +147,9 @@ def nnMatrixFactorisation(data, labels, new_dimension):
     end = time.time()
     return (reduced, end-start)
 
+'''
+tsne
+'''
 def tsne(data, labels, new_dimension):
     print "tsne..."
 
@@ -124,6 +162,9 @@ def tsne(data, labels, new_dimension):
     end = time.time()
     return (reduced, end-start)
 
+'''
+isomap
+'''
 def isomap(data, labels, new_dimension):
     print "isomap..."
 
@@ -136,6 +177,7 @@ def isomap(data, labels, new_dimension):
     end = time.time()
     return (reduced, end-start)
 
+# mds
 def mds(data, labels, new_dimension):
     print "mds ..."
 
@@ -160,6 +202,9 @@ def lle(data, labels, new_dimension):
     end = time.time()
     return (reduced, end-start)
 
+'''
+Spectral Embedding
+'''
 def spectralEmbedding(data, labels, new_dimension):
     print "spectralEmbedding..."
 
@@ -169,6 +214,10 @@ def spectralEmbedding(data, labels, new_dimension):
     end = time.time()
     return (reduced, end-start)
 
+'''
+dict that simply groups all algos to be able to iterate over
+the key is the description used e.g. for the legends in plots
+'''
 options = {
     'no_DR': noDR,
     'hash': hash,
@@ -186,6 +235,9 @@ options = {
     'spectralEmbedding': spectralEmbedding
 }
 
+'''
+helper method
+'''
 def getFewAlgos():
     options = {
         'hash': hash,
@@ -194,7 +246,9 @@ def getFewAlgos():
     }
     return options
 
-
+'''
+helper method
+'''
 def getAllFastAlgos():
     fastOptions = getAllAlgos()
     del(fastOptions["matrix_factorisaton"])
@@ -202,6 +256,9 @@ def getAllFastAlgos():
     del(fastOptions["mds"])
     return fastOptions
 
+'''
+also helper method...
+'''
 def getFasterAlgos():
     fasterOptions = getAllAlgos()
     del(fasterOptions["isomap"])
@@ -209,9 +266,14 @@ def getFasterAlgos():
     del(fasterOptions["kernel_pca"])
     return fasterOptions
 
+# getter for the dic from above
 def getAllAlgos():
     return copy(options)
 
+'''
+pass a list of keys for DR algos and return
+the implementation as a function for each key
+'''
 def getAllAlgosInclude(include):
     allAlgos = getAllAlgos()
     includedAlgos = dict()
@@ -220,12 +282,21 @@ def getAllAlgosInclude(include):
 
     return includedAlgos
 
-
+'''
+pass a list of keys for DR algos and exclude them from
+the list of all algos
+'''
 def getAllAlgosExlude(exclude):
     allAlgos = getAllAlgos()
     for item in exclude:
         del(allAlgos[item])
     return allAlgos
 
+'''
+key: as a key in the dict
+d: original data
+l: label
+dimensionValue: intrinsic dimension
+'''
 def reduceByKey(key, d, l, dimensionValue):
     return options[key](d,l, dimensionValue)

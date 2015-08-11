@@ -22,17 +22,16 @@ matrixB = scikit_rp.getGaussianRP(columns)._make_random_matrix(rows, columns)
 print np.shape(matrixA)
 print np.shape(matrixB)
 
+# generate histogram
 def buildHistogram(data):
     buckets = dict()
     for row in data:
         for value in row:
 
             bucket = "%.2f" % float(value)
-            #print bucket
             if float(bucket) in buckets:
                 buckets[float(bucket)] += 1
             else:
-                #print float(bucket)
                 buckets[float(bucket)] = 1
     return buckets
 
@@ -46,15 +45,12 @@ plt.title("histogram of python's random.randrange()")
 plt.xlabel("bins")
 plt.ylabel("amount of hits / bin")
 
-
 plt.subplot(212)
 plt.bar(list(histB.iterkeys()), list(histB.values()), 0.01, color="black")
 plt.grid()
 plt.title("histogram of python's random.randrange()")
 plt.xlabel("bins")
 plt.ylabel("amount of hits / bin")
-
-
 
 folder = os.path.dirname(os.path.abspath(__file__))
 plt.savefig("%s/output/distributions_histogram.png" % folder, dpi=320)

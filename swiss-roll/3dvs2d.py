@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 print(__doc__)
 
 
@@ -11,9 +17,6 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
 
-df
-
-
 ###############################################################################
 # Generate data (swiss roll dataset)
 n_samples = 1500
@@ -25,7 +28,6 @@ X[:, 1] *= .5
 X = X + np.abs(np.min(X[:,0]))
 X = X + np.abs(np.min(X[:,1]))
 X = X + np.abs(np.min(X[:,2]))
-
 
 
 ###############################################################################

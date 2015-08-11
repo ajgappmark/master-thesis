@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 import numpy as np
 import data_factory
 from analyze import analyze
@@ -6,14 +12,10 @@ from sklearn import cross_validation, linear_model
 from sklearn.preprocessing import OneHotEncoder
 import os.path
 import csv
-
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import time
-
-
-
 
 # reduce the data by given algo
 def durationRocAuc(algo, data, label, dimension):
@@ -24,9 +26,10 @@ def durationRocAuc(algo, data, label, dimension):
 
     return duration, reduced, score.mean()
 
+'''
+10 fold measure of the LR and return the mean
+'''
 def measureFitLR(data, label):
-
-    # measure for 10 times and avg
     sum = list()
     for i in range(0, 10):
         print i
@@ -44,30 +47,9 @@ def measureFitLR(data, label):
     return np.mean(sum)
 
 
-#testSetPercentage = 0.1
-
-#data, label, desc, size = data_factory.loadSixthPlistaDataset(0.02)
-#data, label, desc, size = data_factory.loadFirstCancerDataset()
-
-#print "-----original set------"
-#analyze(data, label)
-
-
-#if size > 0:
-#    initialReduceBlockSize = np.arange(size, size+0.2, 0.1)
-#    trainDataBlocks, trainLabelBlocks, testDataBlocks, testLabelBlocks = data_factory.splitDatasetInBlocks(data, np.array(label), initialReduceBlockSize, testSetPercentage)
-
-#    data = trainDataBlocks[0][0]
-#    label = trainLabelBlocks[0][0]
-
-#print "-----small set------"
-#analyze(data, label)
-
-#print "NO dr lr took: %f" % measureFitLR(data, label)
-
-
-#'''
-
+'''
+gets an experiment and runs it
+'''
 def execute(experiment):
     folder = setupExperimentFolder(experiment)
     algos = experiment['algos']
@@ -75,8 +57,10 @@ def execute(experiment):
     dimensions = experiment["dimensions"]
     experimentName = experiment["name"]
 
+    # now load the data as the function was passed as a lazy reference
     data, label, description, reduce = loadData(experiment)
 
+    # just to make sure data are correct
     analyze(data, label)
 
     # we want one figure for each y-metric
@@ -112,36 +96,30 @@ def execute(experiment):
                 y = yValues[algo][metric]
                 writer.writerow([algo] + y)
 
+# runs that experiment for a metric
 def runExperimentForMetric(data, label, algos, dimensions):
 
     yValues = dict()
     for algo in algos:
         yValues[algo] = dict()
         x = list()
-        #y = list()
 
         yValues[algo]["rocAuc"] = list()
         yValues[algo]["algoDuration"] = list()
         yValues[algo]["lrDuration"] = list()
 
         for dimension in dimensions:
-
             x.append(dimension)
-
             print "%s -> %s dimensions" % (algo, dimension)
-
             algoDuration, reduced, score = durationRocAuc(algo, data, label, dimension)
             lrDuration = measureFitLR(reduced, label)
             yValues[algo]["rocAuc"].append(score)
             yValues[algo]["algoDuration"].append(algoDuration)
             yValues[algo]["lrDuration"].append(lrDuration)
 
-        #yValues[algo]["rocAuc"] = np.mean(yValues[algo]["rocAuc"])
-        #yValues[algo]["algoDuration"] = np.mean(yValues[algo]["algoDuration"])
-        #yValues[algo]["lrDuration"] = np.mean(yValues[algo]["lrDuration"])
-
     return x, yValues
 
+# make sure the output folder exists
 def setupExperimentFolder(experiment):
     outputFolder = os.path.dirname(os.path.abspath(__file__))
     outputFolder = "%s/experiments_new/%s" % (outputFolder, experiment["name"])
@@ -151,6 +129,7 @@ def setupExperimentFolder(experiment):
     print "experiment output is: %s" % outputFolder
     return outputFolder
 
+# loads data based on experiment
 def loadData(experiment):
     if experiment.has_key("size"):
         size = experiment["size"]
@@ -166,6 +145,7 @@ def loadData(experiment):
         data = trainDataBlocks[0][0]
         label = trainLabelBlocks[0][0]
 
+    # if required (cancer datasets) perform binary encoding
     if experiment['binary_encode']:
         print "perform binary encode"
         analyze(data, label, "before encode")

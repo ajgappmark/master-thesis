@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 import numpy as np
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.neighbors import NearestNeighbors
@@ -7,7 +13,6 @@ from analyze import analyze
 from sklearn.preprocessing import OneHotEncoder
 import time
 import os
-
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -18,7 +23,6 @@ import matplotlib.pyplot as plt
     - it can be found at: https://www.stat.berkeley.edu/~bickel/mldim.pdf
     - last access: 28.4.2015
 '''
-
 
 
 def mle(X):

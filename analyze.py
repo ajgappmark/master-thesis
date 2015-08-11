@@ -1,7 +1,13 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 import numpy as np
 import cancer_datasets as cancer
 
-
+# get insights  about the datasets
 def analyze(data, label, description = "analyze data"):
     shapeData = np.shape(data)
     shapeLabel = np.shape(label)

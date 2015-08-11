@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 print(__doc__)
 
 import numpy as np
@@ -27,13 +33,10 @@ for test in tests:
     data, label, desc, size = test()
     label = np.array(label)
 
-    # data_train, data_test, label_train, label_test = train_test_split(data, label, test_size=0.33, random_state=42)
     result = cross_validation.StratifiedShuffleSplit(label, 1, test_size=0.3)
-
     for train_index, test_index in result:
         data_train, data_test = data[train_index], data[test_index]
         label_train, label_test = label[train_index], label[test_index]
-
 
         lr = linear_model.LogisticRegression(class_weight={0.0:0.01, 1.0:0.99})
         lr.fit(data_train, label_train)
@@ -54,7 +57,7 @@ for test in tests:
             if dist < min:
                 min = dist
 
-
+        # plot
         plt.plot(fpr, tpr, label="%s (AUC = %0.2f, threshold = %0.2f)" % (desc, roc_auc, min))
         plt.plot([0, 1], [0, 1], 'k--')
         plt.xlim([0.0, 1.0])
@@ -63,8 +66,3 @@ for test in tests:
         # plt.show()
 
 plt.savefig("output/roc_auc_automatic.png", dpi=320)
-
-
-print "---"
-print thresholds
-

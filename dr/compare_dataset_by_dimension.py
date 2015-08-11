@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 import numpy as np
 import data_factory
 from analyze import analyze
@@ -13,6 +19,7 @@ dimensions = np.arange(50, 300, 40)
 algos = ["hash", "rp", "incremental_pca"]
 testSetPercentage = 0.1
 
+# reduce the dimension
 def reduceForDimension(algo, data, label):
     # now do reduction and plot the performance based on the reduced data
 

@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 import data_factory
 from sklearn import cross_validation
 
@@ -14,11 +20,13 @@ metric = "roc_auc"
 trainBlockSizes = np.arange(0.1, 0.9, 0.1)
 testSetPercentage = 0.02
 
+# build the roc auc value
 def rocAuc(data, labels):
     regr = linear_model.LogisticRegression()
     score = cross_validation.cross_val_score(regr, data, labels, scoring=metric).mean()
     return score
 
+# build the
 def getXYForDataLabel(data, label):
     maxItemsInDataset = len(label)
 
@@ -80,4 +88,3 @@ for i in range(len(dataSets)):
 
     plt.legend(loc="best")
     plt.savefig("dr/output/%s.png" % (desc), dpi=320)
-

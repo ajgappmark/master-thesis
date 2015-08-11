@@ -1,3 +1,9 @@
+'''
+Author: Sebastian Alfers
+This file is part of my thesis 'Evaluation and implementation of cluster-based dimensionality reduction'
+License: https://github.com/sebastian-alfers/master-thesis/blob/master/LICENSE
+'''
+
 import dr
 import experiment_run as run
 import data_factory
@@ -220,18 +226,12 @@ experiment51 = {
     'yValues':          ['rocAuc', 'algoDuration', 'lrDuration']
 }
 
-
-
-print "hey"
-
 if len(sys.argv) != 2:
     print "only / max one param allowed"
     exit()
 
 params = sys.argv
-
 id = params[1]
-
 if not all.has_key(id):
     print "experiment with id '%s' not found" % id
     exit()
