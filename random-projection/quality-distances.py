@@ -88,7 +88,7 @@ def runExperiment(setup):
     plt.savefig("output/experiment_%s_quality-distances.png" % experimentId , dpi=320)
 
 
-################### experiments ###################
+##### experiments #####
 experiment1 = {
     "id":   1,
     "customDistributions": distributions.all,

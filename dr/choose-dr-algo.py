@@ -47,7 +47,7 @@ experiment14["algos"]       = dr.getAllAlgosInclude(["no_DR", "rp", "hash", "pca
 experiment14["dimensions"]  = np.arange(10,70, 10)
 
 
-#################### second cancer dataset ##########################
+###### second cancer dataset ############
 
 experiment21 = experiment11.copy()
 experiment21["description"] = "cancer dataset 2"
@@ -72,7 +72,7 @@ experiment25["name"]        = "experiment2.5"
 experiment25["algos"]       = dr.getAllAlgosInclude(["no_DR", "rp", "hash", "incremental_pca", "pca"])
 experiment25["dimensions"]  = np.arange(5, 15)
 
-#################### plista dataset ##########################
+###### plista dataset ############
 experiment31 = {
     'description':      '6. plista dataset',
     'name':             'experiment3.1',
@@ -115,7 +115,7 @@ experiment36 = {
     'yValues':          ['rocAuc', 'algoDuration', 'lrDuration']
 }
 
-#################### plista dataset ##########################
+###### plista dataset ############
 experiment41 = {
     'description':      '6. plista dataset',
     'name':             'experiment4.1',
@@ -177,7 +177,7 @@ experiment412["name"]  = "experiment4.12"
 experiment412["size"] = 0.6
 experiment412["algos"] = dr.getAllAlgosInclude(["no_DR", "hash"])
 
-#################### plista dataset ##########################
+###### plista dataset ############
 
 # MEMORY ERROR TSNE -> 4 dimensions
 

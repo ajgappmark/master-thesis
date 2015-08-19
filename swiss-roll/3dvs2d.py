@@ -17,7 +17,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
 
-###############################################################################
+#######################
 # Generate data (swiss roll dataset)
 n_samples = 1500
 noise = 0.05
@@ -30,12 +30,12 @@ X = X + np.abs(np.min(X[:,1]))
 X = X + np.abs(np.min(X[:,2]))
 
 
-###############################################################################
+#######################
 # Define the structure A of the data. Here a 10 nearest neighbors
 from sklearn.neighbors import kneighbors_graph
 connectivity = kneighbors_graph(X, n_neighbors=10, include_self=False)
 
-###############################################################################
+#######################
 # Compute clustering
 print("Compute structured hierarchical clustering...")
 
@@ -44,7 +44,7 @@ ward = AgglomerativeClustering(n_clusters=6, connectivity=connectivity,
 label = ward.labels_
 print("Number of points: %i" % label.size)
 
-###############################################################################
+#######################
 # Plot result
 colors = list()
 
